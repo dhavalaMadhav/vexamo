@@ -4,7 +4,7 @@ import { Stars, Sparkles, PerspectiveCamera } from '@react-three/drei';
 
 const projects = [
     {
-        name: 'Unpick',
+        name: 'Unipick',
         category: 'UNIVERSITY ADMISSION PORTAL',
         description: 'A visually rich university admission portal crafted with custom design and smooth interactions.',
         color: '#ff4d4d',
@@ -18,7 +18,7 @@ const projects = [
         link: 'https://swaminarayan-foundation.onrender.com/'
     },
     {
-        name: 'Swarrinm University',
+        name: 'Swarrnim University',
         category: 'ADMISSION PORTAL',
         description: 'A modern e-commerce style platform for university admissions with secure admin panel.',
         color: '#00ccff',
