@@ -34,7 +34,8 @@ function PersistentParticles({ scrollYProgress, isMobile }) {
   // 0 -> Hero, 0.5 -> Transition/Start of Services, 1.0 -> Fully in Services
   const zOffset = useTransform(scrollYProgress, [0, 0.4, 0.8], [0, -5, -12]);
   const yOffset = useTransform(scrollYProgress, [0, 1], [0, -4]);
-  const opacityFactor = useTransform(scrollYProgress, [0, 0.4, 0.8], [1, 0.6, 0.4]);
+  // Fade in only after scrolling away from Hero
+  const opacityFactor = useTransform(scrollYProgress, [0, 0.2, 0.5, 0.8], [0, 0.1, 0.6, 0.4]);
   const parallaxFactor = useTransform(scrollYProgress, [0, 0.4], [1, 0.2]);
 
   // Use springs for smooth interpolation

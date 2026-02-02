@@ -197,8 +197,8 @@ const Services = () => {
   // Calculate maximum radius for the clip-path
   const maxRadius = typeof window !== 'undefined' ? Math.hypot(window.innerWidth, window.innerHeight) * 1.2 : 2000;
 
-  const clipPath1 = useTransform(smoothScrollProgress, [0, 0.5], [`circle(0px at center)`, `circle(${maxRadius}px at center)`]);
-  const clipPath2 = useTransform(smoothScrollProgress, [0.5, 1], [`circle(0px at center)`, `circle(${maxRadius}px at center)`]);
+  const clipPath1 = useTransform(smoothScrollProgress, [0.05, 0.45], [`circle(0px at center)`, `circle(${maxRadius}px at center)`]);
+  const clipPath2 = useTransform(smoothScrollProgress, [0.45, 0.85], [`circle(0px at center)`, `circle(${maxRadius}px at center)`]);
 
   // --- Curve Implementation ---
 
@@ -230,7 +230,7 @@ const Services = () => {
     <>
       <style>{`
         .vixora-services-wrapper {
-          height: 400vh;
+          height: 250vh;
           background: transparent;
         }
 
@@ -245,20 +245,46 @@ const Services = () => {
           /* Curve managed by Framer Motion only */
         }
 
-        .vixora-services-section h2 {
+        .vixora-services-section .section-header-container {
           position: absolute;
-          top: 120px;
+          top: 60px;
           left: 0;
           width: 100%;
           text-align: center;
-          font-size: clamp(60px, 9vw, 120px);
-          font-weight: 800;
-          letter-spacing: -0.02em;
-          text-transform: uppercase;
-          line-height: 1;
-          color: rgba(255, 255, 255, 0.08); /* Subtle but visible */
-          z-index: 5; /* Ensure above active layers */
+          z-index: 20;
+          padding: 0 16px;
           pointer-events: none;
+        }
+
+        .vixora-services-section h2 {
+          color: #ffffff;
+          font-size: clamp(2.25rem, 6vw, 3.75rem);
+          font-weight: 900;
+          letter-spacing: -0.05em;
+          text-transform: uppercase;
+          margin-bottom: 8px;
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          line-height: 1;
+        }
+
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: .7; }
+        }
+
+        .header-divider-services {
+          height: 1px;
+          width: 64px;
+          background: rgba(255, 255, 255, 0.2);
+          margin: 0 auto 16px;
+        }
+
+        .section-subtitle-services {
+          color: rgba(255, 255, 255, 0.4);
+          font-size: clamp(10px, 2vw, 12px);
+          letter-spacing: 0.3em;
+          font-weight: 300;
+          text-transform: uppercase;
         }
 
         .section-title-services {
@@ -277,19 +303,19 @@ const Services = () => {
           position: absolute;
           top: 50%;
           left: 50%;
-          width: 1200px;
-          height: 1200px;
+          width: 800px;
+          height: 600px;
           transform: translate(-50%, -50%);
           border-radius: 50%;
-          filter: blur(120px);
-          opacity: 0.6;
+          filter: blur(140px);
+          opacity: 0.5;
           pointer-events: none;
           z-index: 0;
         }
 
-        .glow-web-dev { background: radial-gradient(circle, rgba(255, 122, 61, 0.8) 0%, rgba(255, 122, 61, 0) 70%); }
-        .glow-logo-design { background: radial-gradient(circle, rgba(138, 61, 255, 0.8) 0%, rgba(138, 61, 255, 0) 70%); }
-        .glow-video-edit { background: radial-gradient(circle, rgba(64, 158, 255, 0.8) 0%, rgba(64, 158, 255, 0) 70%); }
+        .glow-web-dev { background: radial-gradient(circle, rgba(255, 122, 61, 0.7) 0%, rgba(255, 122, 61, 0) 65%); }
+        .glow-logo-design { background: radial-gradient(circle, rgba(138, 61, 255, 0.7) 0%, rgba(138, 61, 255, 0) 65%); }
+        .glow-video-edit { background: radial-gradient(circle, rgba(64, 158, 255, 0.7) 0%, rgba(64, 158, 255, 0) 65%); }
 
         .service-container-services {
           width: 100%;
@@ -327,19 +353,19 @@ const Services = () => {
         }
 
         .service-details-services h3 {
-          font-size: clamp(32px, 4vw, 52px);
+          font-size: 1.875rem; /* 30px to match Work header if it was h4 but here h3 is main title */
           font-weight: 700;
-          margin-bottom: 24px;
-          line-height: 1.2;
+          margin-bottom: 1rem;
+          line-height: 1.25;
           color: #ffffff;
-          letter-spacing: -0.01em;
+          letter-spacing: -0.025em;
         }
 
         .service-details-services p {
-          color: rgba(255, 255, 255, 0.5);
-          line-height: 1.8;
-          margin-bottom: 32px;
-          font-size: 18px;
+          color: rgba(255, 255, 255, 0.4);
+          line-height: 1.625;
+          margin-bottom: 2rem;
+          font-size: 0.75rem;
           font-weight: 300;
           max-width: 480px;
         }
@@ -513,11 +539,10 @@ const Services = () => {
         }
 
         @media (max-width: 768px) {
-          .vixora-services-section h2 { font-size: clamp(32px, 9vw, 48px); top: 20px; }
+          .vixora-services-section .section-header-container { top: 40px; }
           .service-container-services { margin-top: 100px; padding: 20px 16px; }
           .service-content-services { width: 100%; gap: 30px; }
           .service-visual-services { height: 320px; }
-          .service-details-services h3 { font-size: 28px; }
           .service-feature-li-services.hide-mobile-services { display: none; }
         }
       `}</style>
@@ -536,9 +561,13 @@ const Services = () => {
           className="vixora-services-section"
           style={{ clipPath: "url(#service-curve-mask)" }}
         >
-          <h2>
-            <span className="section-title-services">OUR SERVICES</span>
-          </h2>
+          <div className="section-header-container">
+            <h2>OUR SERVICES</h2>
+            <div className="header-divider-services" />
+            <p className="section-subtitle-services">
+              Bespoke digital excellence for forward-thinking brands
+            </p>
+          </div>
           <div className="stage-services">
             {/* Base Layer: Web Dev (always visible behind) */}
             <ServiceLayer service={services[0]} zIndex={1} />
