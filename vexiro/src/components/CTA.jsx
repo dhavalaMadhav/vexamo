@@ -1,0 +1,164 @@
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Stars, Sparkles, PerspectiveCamera } from '@react-three/drei';
+
+// --- Animated Stars Component ---
+const AnimatedStars = () => {
+  const starsRef = useRef();
+  useFrame((state) => {
+    if (!starsRef.current) return;
+    starsRef.current.rotation.y = state.clock.elapsedTime * 0.02;
+    starsRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.1) * 0.1;
+  });
+  return <Stars ref={starsRef} radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1.5} />;
+};
+
+// --- Letter Component: Solid White, Hover Lift + Glow ---
+const Letter = ({ char, index, scrollYProgress, totalLetters }) => {
+    const step = 0.5 / totalLetters; 
+    const start = 0.1 + (index * step);
+    const end = start + 0.15; 
+
+    const y = useTransform(scrollYProgress, [start, end], [100, 0]);
+    const opacity = useTransform(scrollYProgress, [start, end], [0, 1]);
+    
+    const smoothY = useSpring(y, { damping: 15, stiffness: 100 });
+    const smoothOpacity = useSpring(opacity, { damping: 20, stiffness: 100 });
+
+    return (
+        <motion.span
+            style={{ 
+                y: smoothY, 
+                opacity: smoothOpacity,
+                display: 'inline-block',
+                position: 'relative',
+            }}
+            className="group cursor-default"
+        >
+            <motion.span 
+                className="block text-white transition-all duration-300"
+                whileHover={{ 
+                    y: -10, // Raise on hover
+                    textShadow: "0 0 30px rgba(255, 255, 255, 0.8)", // Bright glow on hover
+                    scale: 1.1 
+                }}
+            >
+                {char === ' ' ? '\u00A0' : char}
+            </motion.span>
+        </motion.span>
+    );
+};
+
+const CTA = () => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end end"]
+  });
+
+  const finalLines = [
+      "READY TO",
+      "BUILD YOUR BRAND",
+      "WITH VEXIRO?"
+  ];
+
+  const allChars = finalLines.join("").split("");
+  let globalCharIndex = 0;
+
+  const bottomContentY = useTransform(scrollYProgress, [0.7, 0.9], [100, 0]);
+  const bottomContentOpacity = useTransform(scrollYProgress, [0.7, 0.9], [0, 1]);
+
+  return (
+    <section ref={containerRef} className="relative min-h-[150vh] flex flex-col items-center justify-center bg-[#050507] overflow-hidden">
+      
+      {/* Background Canvas */}
+      <div className="absolute inset-0 z-0">
+        <Canvas>
+            <PerspectiveCamera makeDefault position={[0, 0, 20]} />
+            <AnimatedStars />
+            <Sparkles count={50} scale={20} size={2} color="#ffffff" />
+        </Canvas>
+      </div>
+
+      {/* Subtle Gradient Glow in Background (Requested) */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none z-0 mix-blend-screen animate-pulse" />
+
+      <div className="relative z-10 text-center px-4 w-full max-w-[90vw]">
+        
+        {/* Animated Text Lines */}
+        {/* "The whole text should flicker with glow just as the headings of other pages" -> animate-pulse on container */}
+        <div className="flex flex-col items-center gap-2 md:gap-4 mb-20 animate-pulse">
+             {finalLines.map((line, lineIdx) => (
+                 <div key={lineIdx} className="overflow-hidden flex flex-wrap justify-center gap-[0.2em] md:gap-[0.5em] leading-none">
+                     {line.split("").map((char, charIdx) => {
+                         const idx = globalCharIndex++;
+                         return (
+                            // "Keep font size large enough to fill page" -> Responsive sizing up to 9xl
+                            <div key={idx} className="text-5xl md:text-7xl lg:text-9xl font-black tracking-tighter uppercase">
+                                <Letter 
+                                    char={char} 
+                                    index={idx} 
+                                    scrollYProgress={scrollYProgress} 
+                                    totalLetters={allChars.length} 
+                                />
+                            </div>
+                         );
+                     })}
+                 </div>
+             ))}
+        </div>
+        
+        {/* Bottom Content */}
+        <motion.div 
+            style={{ y: bottomContentY, opacity: bottomContentOpacity }}
+            className="flex flex-col items-center space-y-12"
+        >
+             <p className="text-white/50 text-base md:text-xl font-light tracking-[0.2em] uppercase">
+                The journey starts with a single click.
+             </p>
+
+             <motion.button
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(64,158,255,0.4)" }} // Blueish glow on button
+                whileTap={{ scale: 0.95 }}
+                className="bg-white text-black text-sm md:text-lg font-black px-16 py-5 rounded-full tracking-widest uppercase transition-all duration-300"
+             >
+                CONTACT NOW
+             </motion.button>
+
+             <div className="flex gap-8">
+                 <SocialBox icon={<GithubIcon />} />
+                 <SocialBox icon={<LinkedinIcon />} />
+                 <SocialBox icon={<MailIcon />} />
+             </div>
+        </motion.div>
+
+      </div>
+    </section>
+  );
+};
+
+// Social Box Component
+const SocialBox = ({ icon }) => (
+    <motion.a
+        href="#"
+        whileHover={{ y: -5, backgroundColor: 'rgba(255,255,255,0.1)', boxShadow: "0 0 20px rgba(255,255,255,0.2)" }}
+        className="w-16 h-16 rounded-2xl border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all duration-300 backdrop-blur-sm bg-white/[0.02]"
+    >
+        {icon}
+    </motion.a>
+);
+
+// Icons
+const GithubIcon = () => (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+);
+const LinkedinIcon = () => (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+);
+const MailIcon = () => (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"/><path d="M22 6L12 13L2 6"/></svg>
+);
+
+export default CTA;
