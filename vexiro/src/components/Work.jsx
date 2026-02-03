@@ -3,6 +3,11 @@ import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Stars, Sparkles, PerspectiveCamera } from '@react-three/drei';
 
+// Import logos
+import tatvLogo from '../assets/logos/tatv.png';
+import magicswirllLogo from '../assets/logos/magicswirll.png';
+import unipickLogo from '../assets/logos/unipick.png';
+
 const projects = [
     {
         name: 'Unpick',
@@ -90,7 +95,7 @@ const ProjectCard = ({ project }) => {
     );
 };
 
-const LogoPill = ({ title, desc, color, logoBg, index }) => {
+const LogoPill = ({ title, desc, color, logo, index }) => {
     return (
         <motion.div 
             initial={{ opacity: 0, x: 50 }}
@@ -109,9 +114,12 @@ const LogoPill = ({ title, desc, color, logoBg, index }) => {
                 <p className="text-white/50 text-[9px] font-bold uppercase tracking-[0.2em] leading-tight">{desc}</p>
             </div>
             
-            <div className="w-32 h-32 rounded-full flex-shrink-0 flex items-center justify-center border-4 border-white/5 overflow-hidden relative shadow-inner" style={{ backgroundColor: logoBg }}>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(255,255,255,0.2),_transparent)]" />
-                <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md animate-pulse relative z-10 border border-white/20" />
+            <div className="w-32 h-32 rounded-full flex-shrink-0 flex items-center justify-center border-4 border-white/10 overflow-hidden relative shadow-inner bg-transparent">
+                <img 
+                    src={logo} 
+                    alt={title} 
+                    className="w-full h-full object-contain p-2 relative z-10 transition-transform duration-500 group-hover:scale-110"
+                />
             </div>
         </motion.div>
     );
@@ -181,21 +189,21 @@ const WorkSection = () => {
                         title="TATV" 
                         desc="natural food products" 
                         color="#FF7A3D"
-                        logoBg="#FF7A3D22"
+                        logo={tatvLogo}
                     />
                     <LogoPill 
                         index={1}
                         title="MAGIC SWIRLL" 
                         desc="icecream and desert shop" 
                         color="#8A3DFF"
-                        logoBg="#8A3DFF22"
+                        logo={magicswirllLogo}
                     />
                     <LogoPill 
                         index={2}
                         title="UNIPICK" 
                         desc="university admission conpany" 
                         color="#409EFF"
-                        logoBg="#409EFF22"
+                        logo={unipickLogo}
                     />
                 </div>
             </div>
