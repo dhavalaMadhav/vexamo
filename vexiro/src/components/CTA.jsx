@@ -14,57 +14,12 @@ const AnimatedStars = () => {
   return <Stars ref={starsRef} radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1.5} />;
 };
 
-// --- Letter Component: Solid White, Hover Lift + Glow ---
-const Letter = ({ char, index, scrollYProgress, totalLetters }) => {
-    const step = 0.5 / totalLetters; 
-    const start = 0.1 + (index * step);
-    const end = start + 0.15; 
-
-    const y = useTransform(scrollYProgress, [start, end], [100, 0]);
-    const opacity = useTransform(scrollYProgress, [start, end], [0, 1]);
-    
-    const smoothY = useSpring(y, { damping: 15, stiffness: 100 });
-    const smoothOpacity = useSpring(opacity, { damping: 20, stiffness: 100 });
-
-    return (
-        <motion.span
-            style={{ 
-                y: smoothY, 
-                opacity: smoothOpacity,
-                display: 'inline-block',
-                position: 'relative',
-            }}
-            className="group cursor-default"
-        >
-            <motion.span 
-                className="block text-white transition-all duration-300"
-                whileHover={{ 
-                    y: -10, // Raise on hover
-                    textShadow: "0 0 30px rgba(255, 255, 255, 0.8)", // Bright glow on hover
-                    scale: 1.1 
-                }}
-            >
-                {char === ' ' ? '\u00A0' : char}
-            </motion.span>
-        </motion.span>
-    );
-};
-
 const CTA = () => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end end"]
   });
-
-  const finalLines = [
-      "READY TO",
-      "BUILD YOUR BRAND",
-      "WITH VEXIRO?"
-  ];
-
-  const allChars = finalLines.join("").split("");
-  let globalCharIndex = 0;
 
   const bottomContentY = useTransform(scrollYProgress, [0.7, 0.9], [100, 0]);
   const bottomContentOpacity = useTransform(scrollYProgress, [0.7, 0.9], [0, 1]);
@@ -87,26 +42,27 @@ const CTA = () => {
       <div className="relative z-10 text-center px-4 w-full max-w-[90vw]">
         
         {/* Animated Text Lines */}
-        {/* "The whole text should flicker with glow just as the headings of other pages" -> animate-pulse on container */}
-        <div className="flex flex-col items-center gap-2 md:gap-4 mb-20 animate-pulse">
-             {finalLines.map((line, lineIdx) => (
-                 <div key={lineIdx} className="overflow-hidden flex flex-wrap justify-center gap-[0.2em] md:gap-[0.5em] leading-none">
-                     {line.split("").map((char, charIdx) => {
-                         const idx = globalCharIndex++;
-                         return (
-                            // "Keep font size large enough to fill page" -> Responsive sizing up to 9xl
-                            <div key={idx} className="text-5xl md:text-7xl lg:text-9xl font-black tracking-tighter uppercase">
-                                <Letter 
-                                    char={char} 
-                                    index={idx} 
-                                    scrollYProgress={scrollYProgress} 
-                                    totalLetters={allChars.length} 
-                                />
-                            </div>
-                         );
-                     })}
-                 </div>
-             ))}
+        <div className="flex flex-col items-center justify-center mb-16 relative z-10">
+             <motion.h3 
+                className="text-white text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter uppercase mb-2 animate-pulse text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+             >
+                 READY TO BUILD YOUR BRAND WITH
+             </motion.h3>
+             
+             <motion.h1 
+                className="text-white text-[20vw] leading-[0.85] font-black tracking-tighter uppercase animate-pulse text-center"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                style={{ 
+                    textShadow: "0 0 100px rgba(255,255,255,0.1)"
+                }}
+             >
+                 VEXIRO
+             </motion.h1>
         </div>
         
         {/* Bottom Content */}
