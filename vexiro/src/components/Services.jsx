@@ -20,7 +20,7 @@ const WebDevVisual = () => (
       <div className="code-line-services">  <span className="code-tag-services">&lt;UserExperience</span> <span className="code-attr-services">quality</span>=<span className="code-value-services">"exceptional"</span><span className="code-tag-services">/&gt;</span></div>
       <div className="code-line-services">  <span className="code-tag-services">&lt;BusinessResults</span> <span className="code-attr-services">growth</span>=<span className="code-value-services">"accelerated"</span><span className="code-tag-services">/&gt;</span></div>
       <div className="code-line-services"><span className="code-tag-services">&lt;/Website&gt;</span></div>
-      <div className="code-line-services code-comment-services">{'// Crafted by VIXORA'}</div>
+      <div className="code-line-services code-comment-services">{'// Crafted by VEXAMO'}</div>
     </div>
   </div>
 );
@@ -28,7 +28,11 @@ const WebDevVisual = () => (
 const LogoDesignVisual = () => (
   <div className="visual-container-services">
     <div className="logo-design-visual-services">
-      <div className="vixora-logo-services" style={{ boxShadow: '0 4px 20px rgba(138, 61, 255, 0.15)' }} />
+      <img
+        src="/vexamo.svg"
+        alt="Vexamo Logo"
+        className="w-[180px] h-[180px] object-contain flex-shrink-0 invert brightness-0"
+      />
       <div className="logo-info-services">
         <h4>Brand Identity System</h4>
         <p>Scalable vector logo with full visual identity guidelines. Perfect for all applications and screen sizes.</p>
@@ -161,7 +165,7 @@ const Services = () => {
           background: #000000;
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
-          padding: 120px 0;
+          padding: 64px 0;
           position: relative;
           overflow: hidden;
         }
@@ -301,6 +305,41 @@ const Services = () => {
           border-radius: 1px;
         }
 
+        /* Right Alignment for Reverse Layout (Logo & Brand Identity) */
+        .layout-reverse { gap: 40px; } /* Closer gap */
+        
+        .layout-reverse .service-details-wrapper {
+          text-align: left; /* Changed to left */
+          align-items: flex-start; /* Changed to start */
+          display: flex;
+          flex-direction: column;
+          padding-left: 10%; /* Indent to match visual card alignment */
+        }
+
+        .layout-reverse .service-details-wrapper p {
+          margin-left: 0;
+          margin-right: auto;
+        }
+
+        .layout-reverse .service-features-services {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start; /* Changed to start */
+        }
+
+        .layout-reverse .service-feature-li-services {
+          padding-left: 28px; /* Reverted padding */
+          padding-right: 0;
+          flex-direction: row; /* Reverted direction */
+          text-align: left;
+        }
+
+        .layout-reverse .service-feature-li-services::before {
+          left: 0; /* Reverted position */
+          right: auto;
+          transform: translateY(-50%) rotate(45deg); /* Standard rotation */
+        }
+
         .service-link-services {
           display: inline-flex;
           align-items: center;
@@ -327,16 +366,16 @@ const Services = () => {
         /* Visuals & Glows from Snippet/Original */
         .visual-container-services {
           width: 100%;
-          background: rgba(255, 255, 255, 0.03);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
+          background: radial-gradient(circle at top left, rgba(255,255,255,0.15), transparent 40%), rgba(255, 255, 255, 0.03); /* Corner Shine + Glass Base */
+          backdrop-filter: blur(25px); /* Stronger Blur */
+          -webkit-backdrop-filter: blur(25px);
           border-radius: 24px;
-          border: 1px solid rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(255, 255, 255, 0.1); /* Slightly more visible border */
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle depth */
           padding: 32px;
           overflow: hidden;
           position: relative;
           z-index: 10;
-          /* box-shadow removed as requested */
         }
 
         .center-glow-services {
@@ -391,16 +430,7 @@ const Services = () => {
         .code-value-services { color: #ffffff; }
 
         .logo-design-visual-services { display: flex; align-items: center; justify-content: flex-start; width: 100%; height: 100%; gap: 20px; }
-        .vixora-logo-services {
-          width: 180px; height: 180px; background: linear-gradient(135deg, rgba(255, 122, 61, 0.1), rgba(138, 61, 255, 0.1));
-          border-radius: 20px; padding: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);
-          display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-        }
-        .vixora-logo-services::before {
-          content: 'VIXORA'; font-size: 36px; font-weight: 900; letter-spacing: 0.1em;
-          background: linear-gradient(135deg, #ff7a3d 0%, #8a3dff 50%, #3d7aff 100%);
-          -webkit-background-clip: text; background-clip: text; color: transparent; text-align: center;
-        }
+
         .logo-info-services { color: #a1a1b3; font-size: 14px; line-height: 1.6; }
         .logo-info-services h4 { color: #ffffff; font-size: 18px; margin-bottom: 12px; font-weight: 600; }
 
@@ -443,6 +473,14 @@ const Services = () => {
            .service-feature-item-services { margin-bottom: 4px; padding-left: 16px; } /* Compact list */
            .service-link-services { margin: 0 auto; }
            
+           /* Reset specific reverse alignments for mobile */
+           .layout-reverse .service-details-wrapper {
+             align-items: center;
+             padding-left: 0; /* Reset for mobile */
+           }
+           .layout-reverse .service-features-services { align-items: flex-start; } /* Center/Left on mobile typically */
+           .layout-reverse .service-feature-li-services { padding-left: 28px; padding-right: 0; flex-direction: row; text-align: left; }
+           .layout-reverse .service-feature-li-services::before { left: 0; right: auto; transform: translateY(-50%) rotate(45deg); }
            /* Compact Visuals for Mobile */
            .editor-container-services, 
            .logo-design-visual-services,
@@ -458,9 +496,16 @@ const Services = () => {
           className="vixora-services-section bg-transparent"
         >
           <div className="section-header-container">
-            <h2>OUR SERVICES</h2>
-            <div className="header-divider-services" />
-            <p className="section-subtitle-services">
+            <h2 className="relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
+              OUR SERVICES
+              <div className="absolute -bottom-2 left-0 w-full h-4 -z-10">
+                <svg viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                  <path d="M2.00025 7.00001C35.9529 3.01602 125.792 -2.12693 197.994 3.00631" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="3" strokeLinecap="round" />
+                </svg>
+              </div>
+            </h2>
+            {/* <div className="header-divider-services" /> */}
+            <p className="section-subtitle-services mt-4 bg-clip-text text-transparent bg-gradient-to-b from-white/90 to-white/50">
               Bespoke digital excellence for forward-thinking brands
             </p>
           </div>
@@ -494,7 +539,7 @@ const Services = () => {
 
                   {/* Content Side */}
                   <div className="service-details-wrapper">
-                    <h3>{service.title}</h3>
+                    <h3 className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">{service.title}</h3>
                     <p>{service.desc}</p>
                     <ul className="service-features-services">
                       {service.features.map((feature, fIdx) => (

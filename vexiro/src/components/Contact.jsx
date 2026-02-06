@@ -22,7 +22,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative min-h-screen py-32 flex flex-col items-center justify-center bg-transparent overflow-hidden">
+    <section id="contact" className="relative min-h-screen py-16 flex flex-col items-center justify-center bg-transparent overflow-hidden">
 
       {/* Background Atmosphere */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.02)_0%,_transparent_70%)] pointer-events-none" />
@@ -31,10 +31,15 @@ const Contact = () => {
 
         {/* Main Header Content - Added as requested */}
         <div className="text-center mb-24 relative z-10 fade-in">
-          <h2 className="text-white text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4 animate-pulse">
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4 relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
             GET IN TOUCH
+            <div className="absolute -bottom-2 left-0 w-full h-4 -z-10">
+              <svg viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                <path d="M2.00025 7.00001C35.9529 3.01602 125.792 -2.12693 197.994 3.00631" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="3" strokeLinecap="round" />
+              </svg>
+            </div>
           </h2>
-          <p className="text-white/30 text-[10px] md:text-xs tracking-[0.3em] font-light uppercase">
+          <p className="text-[10px] md:text-xs tracking-[0.3em] font-light uppercase bg-clip-text text-transparent bg-gradient-to-b from-white/90 to-white/50">
             Let's build something extraordinary
           </p>
         </div>
@@ -123,26 +128,28 @@ const Contact = () => {
                 {/* Name Input */}
                 <div className="flex-1 space-y-2 group">
                   <label htmlFor="name" className="text-[10px] font-bold tracking-widest text-[#409EFF] uppercase ml-1">NAME</label>
-                  <div className="relative bg-white/[0.02] border border-white/5 rounded-xl transition-all duration-300 group-focus-within:border-[#409EFF]/50 group-hover:border-white/10 overflow-hidden">
+                  <div className="relative transition-all duration-300">
                     <input
                       type="text"
                       id="name"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="Your Name"
+                      placeholder="What's your name?"
                       required
-                      className="w-full bg-transparent px-6 py-4 text-white placeholder-white/20 focus:outline-none text-sm transition-all"
+                      className="w-full bg-transparent px-2 py-4 text-white placeholder-white/20 border-none outline-none ring-0 focus:ring-0 focus:outline-none text-sm font-light"
                     />
-                    {/* Input Bottom Glow */}
-                    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#409EFF] to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
+                    {/* Tapered Bottom Border - Default */}
+                    <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                    {/* Tapered Bottom Border - Focus */}
+                    <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#409EFF] to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 transform scale-x-0 group-focus-within:scale-x-100" />
                   </div>
                 </div>
 
                 {/* Email Input */}
                 <div className="flex-1 space-y-2 group">
                   <label htmlFor="email" className="text-[10px] font-bold tracking-widest text-[#409EFF] uppercase ml-1">EMAIL</label>
-                  <div className="relative bg-white/[0.02] border border-white/5 rounded-xl transition-all duration-300 group-focus-within:border-[#409EFF]/50 group-hover:border-white/10 overflow-hidden">
+                  <div className="relative transition-all duration-300">
                     <input
                       type="email"
                       id="email"
@@ -151,10 +158,12 @@ const Contact = () => {
                       onChange={handleChange}
                       placeholder="you@example.com"
                       required
-                      className="w-full bg-transparent px-6 py-4 text-white placeholder-white/20 focus:outline-none text-sm transition-all"
+                      className="w-full bg-transparent px-2 py-4 text-white placeholder-white/20 border-none outline-none ring-0 focus:ring-0 focus:outline-none text-sm font-light"
                     />
-                    {/* Input Bottom Glow */}
-                    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#409EFF] to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
+                    {/* Tapered Bottom Border - Default */}
+                    <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                    {/* Tapered Bottom Border - Focus */}
+                    <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#409EFF] to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 transform scale-x-0 group-focus-within:scale-x-100" />
                   </div>
                 </div>
               </div>
@@ -162,39 +171,41 @@ const Contact = () => {
               {/* Message Input */}
               <div className="space-y-2 group">
                 <label htmlFor="message" className="text-[10px] font-bold tracking-widest text-[#409EFF] uppercase ml-1">MESSAGE</label>
-                <div className="relative bg-white/[0.02] border border-white/5 rounded-xl transition-all duration-300 group-focus-within:border-[#409EFF]/50 group-hover:border-white/10 overflow-hidden">
+                <div className="relative transition-all duration-300">
                   <textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Tell us about your project..."
-                    rows="6"
+                    rows="4"
                     required
-                    className="w-full bg-transparent px-6 py-4 text-white placeholder-white/20 focus:outline-none text-sm transition-all resize-none"
+                    className="w-full bg-transparent px-2 py-4 text-white placeholder-white/20 border-none outline-none ring-0 focus:ring-0 focus:outline-none text-sm resize-none font-light"
                   />
-                  {/* Input Bottom Glow */}
-                  <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#409EFF] to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
+                  {/* Tapered Bottom Border - Default */}
+                  <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                  {/* Tapered Bottom Border - Focus */}
+                  <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#409EFF] to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 transform scale-x-0 group-focus-within:scale-x-100" />
                 </div>
               </div>
 
               {/* Button */}
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-white text-black font-black tracking-widest uppercase rounded-full py-4 text-sm hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-all duration-300 flex items-center justify-center gap-3 group mt-4"
+                whileHover={{ scale: 1, boxShadow: "-4px 4px 15px rgba(255, 255, 255, 0.4)" }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full bg-white text-black font-black tracking-widest uppercase rounded-full py-4 text-sm transition-all duration-300 flex items-center justify-center gap-3 group mt-4 relative overflow-hidden"
               >
-                SEND MESSAGE
-                <span className="transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+                <span className="relative z-10">SEND MESSAGE</span>
+                <span className="transform group-hover:translate-x-1 transition-transform duration-300 relative z-10">→</span>
               </motion.button>
             </form>
 
             {/* Contact Details Footnote */}
-            <div className="mt-12 grid grid-cols-3 gap-4 border-t border-white/10 pt-8">
-              <ContactItem icon={<MailIcon />} value="contact@vexiro.dev" />
-              <ContactItem icon={<MapPinIcon />} value="Worldwide" />
-              <ContactItem icon={<TeamIcon />} value="Vexiro Studio" />
+            <div className="mt-16 flex justify-center items-start gap-12 md:gap-20 pt-10">
+              <ContactItem icon={<MailIcon />} value="contact@vexamo.dev" label="EMAIL" />
+              <ContactItem icon={<MapPinIcon />} value="Visakhapatnam, Andhra Pradesh, India" label="LOCATION" />
+              <ContactItem icon={<TeamIcon />} value="Vexamo Studio" label="STUDIO" />
             </div>
           </div>
 
@@ -206,30 +217,36 @@ const Contact = () => {
 
 // Simple Icon Components
 const ContactItem = ({ icon, value }) => (
-  <div className="flex flex-col items-center gap-3 group text-center">
-    <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-300">
-      {icon}
+  <div className="flex flex-col items-center gap-2 group relative">
+    {/* Icon Container - No border/bg, larger icon */}
+    <div className="text-white/70 group-hover:text-white transition-all duration-300 transform group-hover:-translate-y-1">
+      {React.cloneElement(icon, { width: "20", height: "20", className: "stroke-current" })}
     </div>
-    <div className="text-white/60 text-[10px] md:text-sm font-medium tracking-wide">{value}</div>
+
+    {/* Text Reveal - Vertical style */}
+    <div className="absolute top-full mt-4 flex flex-col items-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500 min-w-[max-content] pointer-events-none group-hover:pointer-events-auto">
+      <span className="text-white text-sm font-medium tracking-wide">{value}</span>
+      <div className="w-1 h-3 bg-gradient-to-b from-white/50 to-transparent absolute -top-3 left-1/2 -translate-x-1/2 opacity-50" />
+    </div>
   </div>
 );
 
-const MailIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="stroke-white/80">
+const MailIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M22 6L12 13L2 6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
-const MapPinIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="stroke-white/80">
+const MapPinIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
-const TeamIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="stroke-white/80">
+const TeamIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import tatvLogo from '../assets/logos/tatv.png';
 import magicswirllLogo from '../assets/logos/magicswirll.png';
 import unipickLogo from '../assets/logos/unipick.png';
+import magicClickzzLogo from '../assets/logos/magic clickzz.png';
 
 const projects = [
     {
@@ -65,8 +66,9 @@ const ProjectCard = ({ project }) => {
                     // To be concentric with a gap, the hole radius needs to be larger than 28px (e.g., 34px).
                     // Mask center: calc(100% - 28px) calc(100% - 28px)
                     maskImage: 'radial-gradient(circle at calc(100% - 28px) calc(100% - 28px), transparent 34px, black 35px)',
-                    WebkitMaskImage: 'radial-gradient(circle at calc(100% - 28px) calc(100% - 28px), transparent 34px, black 35px)'
-                    // boxShadow removed as requested
+                    WebkitMaskImage: 'radial-gradient(circle at calc(100% - 28px) calc(100% - 28px), transparent 34px, black 35px)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
                 }}
             >
                 {/* SVG Border for Cutout - Positioned exactly on the hole */}
@@ -175,7 +177,7 @@ const LogoPill = ({ title, desc, color, logo, index }) => {
                 <img
                     src={logo}
                     alt={title}
-                    className="w-full h-full object-contain scale-90 relative z-10 drop-shadow-lg"
+                    className={`w-full h-full object-contain scale-90 relative z-10 drop-shadow-lg ${index === 3 ? 'rounded-full' : ''}`}
                 />
             </div>
         </div>
@@ -191,11 +193,18 @@ const WorkSection = () => {
 
             {/* Main Header Content - Centered */}
             <div className="relative z-20 text-center px-4 mb-24 w-full max-w-4xl">
-                <h3 className="text-white text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4 animate-pulse">
+                <h3 className="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4 relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
                     Delivered Projects
+                    {/* SVG Underline */}
+                    <div className="absolute -bottom-2 left-0 w-full h-4 -z-10">
+                        <svg viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                            <path d="M2.00025 7.00001C35.9529 3.01602 125.792 -2.12693 197.994 3.00631" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="3" strokeLinecap="round" />
+                        </svg>
+                    </div>
                 </h3>
-                <div className="h-[1px] w-24 bg-white/20 mx-auto mb-4" />
-                <p className="text-white/40 text-[10px] md:text-xs tracking-[0.3em] font-light uppercase">
+                {/* Removed Separator Line */}
+                {/* <div className="h-[1px] w-24 bg-white/20 mx-auto mb-4" /> */}
+                <p className="text-[10px] md:text-xs tracking-[0.3em] font-light uppercase mt-4 bg-clip-text text-transparent bg-gradient-to-b from-white/90 to-white/50">
                     Showcasing excellence in digital solutions
                 </p>
             </div>
@@ -258,7 +267,7 @@ const WorkSection = () => {
                         title="MAGIC CLICKZZ"
                         desc="digital photography"
                         color="#ffffff"
-                        logo={tatvLogo}
+                        logo={magicClickzzLogo}
                     />
                 </div>
             </div>

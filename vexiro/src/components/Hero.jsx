@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import tech1 from '../assets/hero/tech_1.png';
 import tech2 from '../assets/hero/tech_2.png';
 import tech3 from '../assets/hero/tech_3.png';
@@ -55,15 +55,24 @@ const BentoColumn = ({ images, speed = 20, reverse = false }) => {
 // --- Main Hero Component ---
 
 const Hero = () => {
-  const { scrollY } = useScroll();
+  // Mouse tracking for subtle depth
 
-  // Mouse tracking removed
+  const words = ["Websites.", "Web Apps.", "Brands.", "Interfaces.", "Experiences."];
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    // Slight initial delay to let entrance animation finish
+    const startTimeout = setTimeout(() => {
+      const interval = setInterval(() => {
+        setIndex((prev) => (prev + 1) % words.length);
+      }, 3500); // Slower, calm rhythm
+      return () => clearInterval(interval);
+    }, 2000);
+
+    return () => clearTimeout(startTimeout);
+  }, []);
 
 
-
-  const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
-  const heroScale = useTransform(scrollY, [0, 500], [1, 0.95]);
-  const heroY = useTransform(scrollY, [0, 500], [0, 100]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -96,6 +105,17 @@ const Hero = () => {
       }
     }
   };
+  const underlineDraw = {
+    hidden: { scaleX: 0, originX: 0 },
+    visible: {
+      scaleX: 1,
+      transition: {
+        duration: 0.9,
+        delay: 1.6,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -121,21 +141,17 @@ const Hero = () => {
   return (
     <section id="home" className="relative w-full h-screen bg-transparent text-white overflow-hidden font-sans">
 
-      {/* OPTIONAL DEPTH ENHANCEMENT REMOVED */}
-
-      {/* 1. PREMIUM HEADER LAYER */}
+      {/* 1. PREMIUM HEADER LAYER - PRESERVED NAV BAR (NO BACKGROUND/BORDER) */}
       <motion.header
-        className="absolute top-0 left-0 w-full z-50 px-8 md:px-12 py-10 flex items-center justify-between pointer-events-auto"
-        style={{ opacity: heroOpacity }}
+        className="absolute top-0 left-0 w-full z-50 px-8 md:px-12 py-5 flex items-center justify-between pointer-events-auto"
+        style={{}}
       >
         <div className="flex items-center gap-4">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-white/20 to-white/5 border border-white/10 backdrop-blur-sm relative overflow-hidden group">
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </div>
+          <img src="/vexamo.svg" alt="Vexamo" className="w-16 h-16 object-contain invert brightness-0" />
           <span className="text-xl font-black tracking-tighter text-white/95 uppercase font-sans">VEXAMO</span>
         </div>
 
-        {/* Desktop Nav */}
+        {/* Desktop Nav - PRESERVED STYLE (No liquid-morph, just links) */}
         <nav className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8 py-3 transition-all duration-500">
           {['Our Services', 'Projects', 'Contact'].map((item) => {
             const id = item.toLowerCase().replace(' ', '-');
@@ -156,9 +172,6 @@ const Hero = () => {
         </nav>
       </motion.header>
 
-      {/* Mobile Menu Button - Visible only on mobile */}
-
-
       {/* MAIN TWO-COLUMN LAYOUT */}
       <div className="relative z-10 w-full h-full grid grid-cols-1 lg:grid-cols-[55%_45%] items-center px-6 md:px-12 lg:px-20 gap-12">
 
@@ -168,9 +181,9 @@ const Hero = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
+          style={{}}
         >
-          <div className="pointer-events-auto mt-32 w-full max-w-none lg:max-w-[48rem]">
+          <div className="pointer-events-auto mt-16 w-full max-w-none lg:max-w-[48rem]">
 
             <motion.p
               variants={itemVariants}
@@ -180,54 +193,69 @@ const Hero = () => {
             </motion.p>
 
             {/* INNER HEADLINE WRAPPER (MANDATORY SAFE BOUNDS) */}
-            <div className="relative overflow-visible py-4 pb-6 w-full">
+            <div className="relative overflow-visible py-4 pb-6 w-full max-w-[720px]">
               <motion.h1
-                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white flex flex-col gap-2 overflow-visible"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 inline-block relative overflow-visible leading-[1.35] tracking-normal"
               >
-                {/* LINE 1 WRAPPER */}
-                <div className="block relative overflow-visible">
-                  <div className="block relative overflow-hidden min-h-[1.3em]">
-                    <motion.span
-                      variants={lineVariants}
-                      className="block leading-[1.1] break-normal"
-                    >
-                      We Design, Build & Deliver
-                    </motion.span>
+                {/* MAIN TEXT WITH ROTATOR INLINE */}
+                <motion.div
+                  variants={lineVariants}
+                  className="inline"
+                >
+                  <span className="inline mr-[0.4em] bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">We Design, Build & Deliver</span>
 
-                  </div>
-                </div>
+                  {/* ROTATOR CONTAINER (INLINE BLOCK) */}
+                  <span className="inline-flex relative h-[1.3em] items-center overflow-hidden min-w-[7ch] ml-1">
+                    {/* INVISIBLE PLACEHOLDER FOR LAYOUT STABILITY */}
+                    <span className="block italic font-cursive opacity-0 select-none whitespace-nowrap h-full leading-none">
 
-                {/* LINE 2 WRAPPER (CURSIVE) */}
-                <div className="block relative overflow-visible pb-2">
-                  <div className="block relative overflow-hidden min-h-[1.6em]">
-                    <motion.span
-                      variants={lineVariants}
-                      className="block italic font-cursive text-white/95 opacity-90 leading-[1.3] pb-2 break-normal"
-                    >
+                      Experiences.
+                    </span>
 
-                      High-Quality <span className="font-sans italic-none not-italic">Digital Products.</span>
-                      <motion.div
-                        variants={underlineVariants}
-                        className="absolute bottom-2 left-0 w-32 md:w-48 h-[1px] bg-white/30"
-                      />
-                    </motion.span>
-                  </div>
-                </div>
+                    {/* ANIMATED ROTATING WORD */}
+                    <AnimatePresence mode="wait">
+                      <motion.span
+                        key={words[index]}
+                        initial={{ y: "40%", opacity: 0, filter: "blur(4px)" }}
+                        animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
+                        exit={{ y: "-40%", opacity: 0, filter: "blur(4px)" }}
+                        transition={{
+                          duration: 0.8,
+                          ease: [0.16, 1, 0.3, 1]
+                        }}
+
+                        className="absolute left-0 top-1 block italic font-cursive text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 whitespace-nowrap"
+                      >
+
+                        {words[index]}
+                        {/* SVG UNDERLINE */}
+                        <div className="absolute -bottom-2 left-0 w-full h-3">
+                          <svg viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                            <motion.path
+                              d="M2.00025 7.00001C35.9529 3.01602 125.792 -2.12693 197.994 3.00631"
+                              stroke="rgba(255, 255, 255, 0.3)"
+                              strokeWidth="3"
+                              strokeLinecap="round"
+                              initial={{ pathLength: 0, opacity: 0 }}
+                              animate={{ pathLength: 1, opacity: 1 }}
+                              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                            />
+                          </svg>
+                        </div>
+                      </motion.span>
+
+                    </AnimatePresence>
+
+                  </span>
+                </motion.div>
               </motion.h1>
             </div>
 
             <motion.p
               variants={itemVariants}
-              className="text-sm md:text-base text-white/60 font-light mb-6 leading-relaxed max-w-md"
+              className="text-sm md:text-base text-transparent bg-clip-text bg-gradient-to-b from-white/90 to-white/50 font-medium mb-6 leading-relaxed max-w-lg"
             >
-              From websites and web applications to branding, UI/UX, and digital experiences — we help businesses build products that look premium, work flawlessly, and scale with confidence.
-            </motion.p>
-
-            <motion.p
-              variants={itemVariants}
-              className="text-[10px] tracking-widest uppercase text-white/30 mb-8 font-medium"
-            >
-              Focused on performance, precision, and long-term value.
+              From websites and web applications to branding and UI/UX — we help businesses build products that look premium, work flawlessly, and scale with confidence.
             </motion.p>
 
             <motion.div
@@ -251,7 +279,7 @@ const Hero = () => {
         </motion.div>
 
         {/* RIGHT COLUMN: BENTO GRID (STABLE BOUNDS) */}
-        <div className="h-full flex items-center justify-end overflow-visible pointer-events-none relative pl-2 lg:pl-6 -translate-x-4 lg:-translate-x-8">
+        <div className="h-full flex items-center justify-end overflow-visible pointer-events-none relative pl-0 lg:pl-0 -translate-x-16 lg:-translate-x-24">
 
           <motion.div
             className="group grid grid-cols-2 gap-4 h-[110vh] -rotate-12 scale-75 opacity-60 w-[100%] origin-right transition-opacity duration-500"
@@ -266,10 +294,10 @@ const Hero = () => {
 
       </div>
 
-      {/* SCROLL INDICATOR */}
+      {/* SCROLL INDICATOR - HIDDEN ON MOBILE */}
       <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 pointer-events-none z-10"
-        style={{ opacity: heroOpacity }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-4 pointer-events-none z-10"
+        style={{}}
       >
         <span className="text-[10px] tracking-[0.4em] uppercase text-white/30 font-medium">Scroll to Explore</span>
         <motion.div
