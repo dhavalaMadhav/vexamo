@@ -9,21 +9,21 @@ import magicClickzzLogo from '../assets/logos/magic clickzz.png';
 
 const projects = [
     {
-        name: 'Unpick',
+        name: 'Unipick',
         category: 'UNIVERSITY ADMISSION PORTAL',
         description: 'A visually rich university admission portal crafted with custom design and smooth interactions.',
         color: '#FF7A3D', // Brown/Orange
         link: 'https://www.unipick.org/'
     },
     {
-        name: 'Swaminarayana University',
+        name: 'Swaminarayan University',
         category: 'ADMISSION PORTAL',
         description: 'Comprehensive educational platform for student enrollment and academic management.',
         color: '#8A3DFF', // Violet
         link: 'https://swaminarayan-foundation.onrender.com/'
     },
     {
-        name: 'Swarrinm University',
+        name: 'Swarrnim University',
         category: 'ADMISSION PORTAL',
         description: 'A modern e-commerce style platform for university admissions with secure admin panel.',
         color: '#409EFF', // Blue
@@ -67,8 +67,6 @@ const ProjectCard = ({ project }) => {
                     // Mask center: calc(100% - 28px) calc(100% - 28px)
                     maskImage: 'radial-gradient(circle at calc(100% - 28px) calc(100% - 28px), transparent 34px, black 35px)',
                     WebkitMaskImage: 'radial-gradient(circle at calc(100% - 28px) calc(100% - 28px), transparent 34px, black 35px)',
-                    backdropFilter: 'blur(10px)',
-                    WebkitBackdropFilter: 'blur(10px)'
                 }}
             >
                 {/* SVG Border for Cutout - Positioned exactly on the hole */}

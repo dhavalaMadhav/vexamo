@@ -1,0 +1,49 @@
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+
+const CurvedDivider = () => {
+    const { scrollYProgress } = useScroll();
+    const smoothProgress = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
+
+    const startOffset = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+
+    return (
+        <div className="relative w-full h-[150px] md:h-[200px] overflow-hidden -mt-1 -mb-1 z-20 pointer-events-none">
+            <svg
+                viewBox="0 0 1440 320"
+                preserveAspectRatio="none"
+                className="w-full h-full block"
+            >
+                {/* 
+                  Clean Band with Parallel Edges:
+                  Using a single path with a thick stroke ensures the edges are mathematically parallel.
+                */}
+                <path
+                    id="curvePath"
+                    d="M-50,200 C300,380 1000,-100 1500,150"
+                    fill="none"
+                    stroke="#ffffff"
+                    strokeWidth="140"
+                />
+
+                <text width="100%" dy="10">
+                    <motion.textPath
+                        xlinkHref="#curvePath"
+                        startOffset={startOffset}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                        className="text-[30px] md:text-[50px] font-black uppercase tracking-tighter"
+                        fill="#000000"
+                    >
+                        DELIVERED PROJECTS • SELECTED WORK • VEXAMO STUDIO • DELIVERED PROJECTS • SELECTED WORK •
+                    </motion.textPath>
+                </text>
+            </svg>
+        </div>
+    );
+};
+
+export default CurvedDivider;

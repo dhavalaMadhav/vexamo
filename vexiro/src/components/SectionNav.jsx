@@ -5,6 +5,7 @@ const sections = [
   { id: 'home', name: 'Home' },
   { id: 'our-services', name: 'Services' },
   { id: 'projects', name: 'Projects' },
+  { id: 'team', name: 'Team' },
   { id: 'contact', name: 'Contact' }
 ];
 
@@ -51,7 +52,7 @@ const SectionNav = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
-            className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col items-end gap-6"
+            className="fixed right-8 top-[45%] -translate-y-1/2 z-50 hidden md:flex flex-col items-end gap-6"
           >
             {sections.map((section) => (
               <motion.div

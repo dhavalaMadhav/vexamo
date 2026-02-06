@@ -90,6 +90,50 @@ const Circle3DBackground = ({ type }) => (
 
 // --- Main Component ---
 
+// --- Connector Line Component ---
+const ServicesConnector = () => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start center", "end center"]
+  });
+
+  return (
+    <div ref={ref} className="absolute inset-0 z-0 pointer-events-none w-full h-full hidden md:block">
+      <svg
+        className="w-full h-full overflow-visible"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        {/* 
+                  Path Logic:
+                  1. Starts at approx 25% X (Left Visual Center) near top.
+                  2. curves to 75% X (Right Visual Center) in middle.
+                  3. curves back to 25% X (Left Visual Center) near bottom.
+                  
+                  Coordinates (Percentage based):
+                  M 25,15 (Visual 1)
+                  C 25,30 75,40 75,50 (Curve to Visual 2)
+                  C 75,60 25,70 25,85 (Curve to Visual 3)
+                */}
+        <motion.path
+          d="M 20,15 C 20,35 80,35 80,50 C 80,65 20,65 20,85"
+          fill="none"
+          stroke="white"
+          strokeWidth="1"
+          strokeLinecap="round"
+          style={{
+            pathLength: scrollYProgress,
+            opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1])
+          }}
+        />
+      </svg>
+    </div>
+  );
+};
+
+// --- Main Component ---
+
 const Services = () => {
   const wrapperRef = useRef(null);
 
@@ -162,9 +206,9 @@ const Services = () => {
 
         /* Styling from user snippet */
         .vixora-services-section {
-          background: #000000;
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
+          background: transparent;
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
           padding: 64px 0;
           position: relative;
           overflow: hidden;
@@ -183,15 +227,7 @@ const Services = () => {
             color: inherit;
         }
 
-        .vixora-services-section h2 {
-          color: #ffffff; 
-          font-size: clamp(2.25rem, 6vw, 3.75rem);
-          font-weight: 900;
-          letter-spacing: -0.05em;
-          text-transform: uppercase;
-          margin-bottom: 8px;
-          line-height: 1;
-        }
+
 
         .header-divider-services {
           height: 1px;
@@ -217,6 +253,7 @@ const Services = () => {
           max-width: 1400px;
           margin: 0 auto;
           padding: 0 20px;
+          position: relative; /* Essential for absolute connector */
         }
 
         .service-block {
@@ -496,7 +533,7 @@ const Services = () => {
           className="vixora-services-section bg-transparent"
         >
           <div className="section-header-container">
-            <h2 className="relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4 relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
               OUR SERVICES
               <div className="absolute -bottom-2 left-0 w-full h-4 -z-10">
                 <svg viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
@@ -511,6 +548,9 @@ const Services = () => {
           </div>
 
           <div className="services-stack">
+            {/* Connector Line absolute to stack */}
+            <ServicesConnector />
+
             {services.map((service, idx) => {
               const Visual = service.type === 'web-dev' ? WebDevVisual :
                 service.type === 'logo-design' ? LogoDesignVisual :

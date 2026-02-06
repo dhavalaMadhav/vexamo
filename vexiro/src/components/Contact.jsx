@@ -64,7 +64,17 @@ const Contact = () => {
             </div>
 
             {/* Infinity Loop - Dual Overlapping Organic Shapes */}
-            <div className="relative w-full max-w-[700px] aspect-[700/460] drop-shadow-2xl">
+            <div className="relative w-full max-w-[700px] aspect-[700/460] drop-shadow-2xl group cursor-pointer">
+              {/* Hover Overlay Text */}
+              <div className="absolute top-[25%] right-[15%] z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <span
+                  className="text-[10px] font-bold tracking-widest uppercase text-white"
+                  style={{ textShadow: '0px 2px 4px #000000, 0px 4px 8px #000000' }}
+                >
+                  FOUNDER: MADHAV DHAVALA
+                </span>
+              </div>
+
               <svg className="w-full h-full overflow-visible" viewBox="0 0 700 460">
                 <defs>
                   {/* Drop Shadow Filter for Irregular Shapes */}
@@ -76,12 +86,12 @@ const Contact = () => {
                   {/* Left Shape Path - Taller and Curvier */}
                   <path
                     id="blob-left"
-                    d="M 220,20 C 350,0 430,120 400,240 C 370,360 260,420 140,400 C 40,380 10,240 70,120 C 110,40 220,20 220,20 Z"
+                    d="M 240,440 C 110,460 30,340 60,220 C 90,100 200,40 320,60 C 420,80 450,220 360,320 C 320,365 240,440 240,440 Z"
                   />
                   {/* Right Shape Path - More Curvy and Organic */}
                   <path
                     id="blob-right"
-                    d="M 400,30 C 600,0 680,180 620,330 C 560,450 320,410 280,290 C 240,160 300,50 400,30 Z"
+                    d="M 460,20 C 590,0 670,120 640,240 C 610,360 500,420 380,400 C 280,380 250,240 340,140 C 380,95 460,20 460,20 Z"
                   />
 
                   <mask id="mask-left">
@@ -201,11 +211,11 @@ const Contact = () => {
               </motion.button>
             </form>
 
-            {/* Contact Details Footnote */}
-            <div className="mt-16 flex justify-center items-start gap-12 md:gap-20 pt-10">
+            {/* Contact Details Footnote - Added Phone/WhatsApp/Mail closer to button */}
+            <div className="mt-8 flex justify-center items-start gap-12 md:gap-20">
+              <ContactItem icon={<PhoneIcon />} value="+91 98765 43210" label="PHONE" />
+              <ContactItem icon={<WhatsAppIcon />} value="+91 98765 43210" label="WHATSAPP" />
               <ContactItem icon={<MailIcon />} value="contact@vexamo.dev" label="EMAIL" />
-              <ContactItem icon={<MapPinIcon />} value="Visakhapatnam, Andhra Pradesh, India" label="LOCATION" />
-              <ContactItem icon={<TeamIcon />} value="Vexamo Studio" label="STUDIO" />
             </div>
           </div>
 
@@ -238,17 +248,18 @@ const MailIcon = (props) => (
   </svg>
 );
 
-const MapPinIcon = (props) => (
+const PhoneIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M22 16.92V19.92C22.0011 20.1986 21.9441 20.4742 21.8325 20.7294C21.7209 20.9846 21.5573 21.2137 21.3521 21.402C21.1468 21.5902 20.9046 21.7336 20.6407 21.8228C20.3769 21.912 20.0974 21.9452 19.82 21.92C16.7428 21.5857 13.787 20.5342 11.19 18.85C8.77382 17.2436 6.72533 15.1951 5.11999 12.78C3.43135 10.177 2.37877 7.2144 2.04999 4.13C2.02484 3.85303 2.05797 3.57396 2.14704 3.31055C2.23611 3.04715 2.37922 2.80517 2.56715 2.60012C2.75508 2.39507 2.98363 2.23158 3.23842 2.12028C3.4932 2.00898 3.76865 1.95232 4.04699 1.954H7.04999C7.5401 1.94902 8.01297 2.13324 8.37525 2.47056C8.73753 2.80788 8.96623 3.27555 9.01999 3.78C9.11765 4.70769 9.34446 5.61741 9.69999 6.47C9.84377 6.81803 9.87522 7.20011 9.78985 7.56708C9.70448 7.93405 9.50616 8.26799 9.21999 8.53L7.94999 9.8C9.37517 12.2882 11.4518 14.3648 13.94 15.79L15.21 14.52C15.4746 14.2372 15.8089 14.0416 16.1755 13.9582C16.5422 13.8748 16.9231 13.9079 17.27 14.05C18.1226 14.4055 19.0323 14.6323 19.96 14.73C20.4674 14.7845 20.9372 15.0152 21.2752 15.38C21.6132 15.7447 21.7963 16.2192 21.79 16.71L22 16.92V16.92Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
-const TeamIcon = (props) => (
+const WhatsAppIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+      fill="currentColor"
+    />
   </svg>
 );
 

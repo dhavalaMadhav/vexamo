@@ -42,7 +42,7 @@ const BentoColumn = ({ images, speed = 20, reverse = false }) => {
             <img
               src={img}
               alt="Work Preview"
-              className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 scale-110 group-hover:scale-100"
+              className="w-full h-full object-cover opacity-100 group-hover:opacity-100 transition-all duration-700 scale-110 group-hover:scale-100"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
@@ -129,7 +129,7 @@ const Hero = () => {
   const bentoVariants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: {
-      opacity: 0.6,
+      opacity: 1,
       scale: 1,
       transition: { duration: 2, ease: [0.16, 1, 0.3, 1], delay: 0.5 }
     }
@@ -164,6 +164,7 @@ const Hero = () => {
                   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
                 }}
                 className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/50 hover:text-white transition-colors duration-300 whitespace-nowrap"
+                style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}
               >
                 {item}
               </a>
