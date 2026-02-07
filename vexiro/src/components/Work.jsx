@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 // Import logos
 import tatvLogo from '../assets/logos/tatv.png';
