@@ -275,19 +275,7 @@ const Hero = () => {
 
       </div>
 
-      {/* SCROLL INDICATOR - HIDDEN ON MOBILE */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-4 pointer-events-none z-10"
-        style={{ opacity: 1 - scrollY.get() / 200 }} 
-        // Need to use useTransform here technically or just rely on hero opacity
-      >
-        <span className="text-[10px] tracking-[0.4em] uppercase text-white/30 font-medium">Scroll to Explore</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="h-12 w-[1px] bg-gradient-to-b from-white/40 to-transparent relative"
-        />
-      </motion.div>
+
 
     </motion.section>
   );

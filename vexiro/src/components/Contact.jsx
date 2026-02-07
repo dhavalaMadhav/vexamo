@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import techImg from '../assets/hero/tech_1.png';
-//import { fadeIn } from '../variants';
-import { animations } from '../utils/animations';
-import TextReveal from './TextReveal';
-
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -22,7 +18,7 @@ const Contact = () => {
     const { name, email, message } = formData;
     const subject = encodeURIComponent(`New Project Inquiry from ${name}`);
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-    window.location.href = `mailto:contact@vexiro.dev?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:madhavdhavala0@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -34,9 +30,15 @@ const Contact = () => {
       <div className="container mx-auto max-w-6xl relative z-10 px-4">
 
         {/* Main Header Content - Added as requested */}
-        <div className="text-center mb-24 relative z-10 fade-in">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4 relative inline-block">
-             <TextReveal>GET IN TOUCH</TextReveal>
+        <motion.div
+          className="text-center mb-24 relative z-10"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4 relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
+            GET IN TOUCH
             <div className="absolute -bottom-2 left-0 w-full h-4 -z-10">
               <svg viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
                 <path d="M2.00025 7.00001C35.9529 3.01602 125.792 -2.12693 197.994 3.00631" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="3" strokeLinecap="round" />
@@ -46,7 +48,7 @@ const Contact = () => {
           <p className="text-[10px] md:text-xs tracking-[0.3em] font-light uppercase bg-clip-text text-transparent bg-gradient-to-b from-white/90 to-white/50">
             Let's build something extraordinary
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -56,10 +58,11 @@ const Contact = () => {
             {/* Text Container - Moved Above Images */}
             <div className="flex flex-col items-start w-full pl-4 md:pl-0 max-w-md mb-8">
               {/* "Team Building" Title - Scrollytelling Style */}
-              <div className="text-white/30 text-[10px] md:text-xs tracking-[0.3em] font-light uppercase mt-2">
+              <p className="text-white/30 text-[10px] md:text-xs tracking-[0.3em] font-light uppercase mt-2">
                 Team Building
                 <div className="h-[1px] w-12 bg-white/20 mt-2" />
-              </div>
+              </p>
+
               {/* Team Description */}
               <p className="text-white/60 text-sm font-light leading-relaxed text-left mt-4">
                 Our team of designers and engineers work in perfect harmony to build digital products that stand the test of time.
@@ -86,15 +89,25 @@ const Contact = () => {
                   </filter>
 
                   {/* Left Shape Path - Modeled after the "blue blob" reference */}
-                  {/* Left Shape Path - Taller and Curvier */}
-                  <path
+                  {/* Left Diamond Shape - Increased Size to 320 */}
+                  <rect
                     id="blob-left"
-                    d="M 240,440 C 110,460 30,340 60,220 C 90,100 200,40 320,60 C 420,80 450,220 360,320 C 320,365 240,440 240,440 Z"
+                    x="140"
+                    y="70"
+                    width="320"
+                    height="320"
+                    rx="40"
+                    transform="rotate(45 300 230)"
                   />
-                  {/* Right Shape Path - More Curvy and Organic */}
-                  <path
+                  {/* Right Diamond Shape - Increased Size to 320 */}
+                  <rect
                     id="blob-right"
-                    d="M 460,20 C 590,0 670,120 640,240 C 610,360 500,420 380,400 C 280,380 250,240 340,140 C 380,95 460,20 460,20 Z"
+                    x="240"
+                    y="70"
+                    width="320"
+                    height="320"
+                    rx="40"
+                    transform="rotate(45 400 230)"
                   />
 
                   <mask id="mask-left">
@@ -140,7 +153,7 @@ const Contact = () => {
               <div className="flex flex-col md:flex-row gap-6">
                 {/* Name Input */}
                 <div className="flex-1 space-y-2 group">
-                  <label htmlFor="name" className="text-[10px] font-bold tracking-widest text-[#409EFF] uppercase ml-1">NAME</label>
+                  <label htmlFor="name" className="text-[10px] font-bold tracking-widest text-white/50 uppercase ml-1">NAME</label>
                   <div className="relative transition-all duration-300">
                     <input
                       type="text"
@@ -161,7 +174,7 @@ const Contact = () => {
 
                 {/* Email Input */}
                 <div className="flex-1 space-y-2 group">
-                  <label htmlFor="email" className="text-[10px] font-bold tracking-widest text-[#409EFF] uppercase ml-1">EMAIL</label>
+                  <label htmlFor="email" className="text-[10px] font-bold tracking-widest text-white/50 uppercase ml-1">EMAIL</label>
                   <div className="relative transition-all duration-300">
                     <input
                       type="email"
@@ -183,7 +196,7 @@ const Contact = () => {
 
               {/* Message Input */}
               <div className="space-y-2 group">
-                <label htmlFor="message" className="text-[10px] font-bold tracking-widest text-[#409EFF] uppercase ml-1">MESSAGE</label>
+                <label htmlFor="message" className="text-[10px] font-bold tracking-widest text-white/50 uppercase ml-1">MESSAGE</label>
                 <div className="relative transition-all duration-300">
                   <textarea
                     id="message"
@@ -198,7 +211,7 @@ const Contact = () => {
                   {/* Tapered Bottom Border - Default */}
                   <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                   {/* Tapered Bottom Border - Focus */}
-                  <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#409EFF] to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 transform scale-x-0 group-focus-within:scale-x-100" />
+                  <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 transform scale-x-0 group-focus-within:scale-x-100" />
                 </div>
               </div>
 
@@ -216,9 +229,24 @@ const Contact = () => {
 
             {/* Contact Details Footnote - Added Phone/WhatsApp/Mail closer to button */}
             <div className="mt-8 flex justify-center items-start gap-12 md:gap-20">
-              <ContactItem icon={<PhoneIcon />} value="+91 98765 43210" label="PHONE" />
-              <ContactItem icon={<WhatsAppIcon />} value="+91 98765 43210" label="WHATSAPP" />
-              <ContactItem icon={<MailIcon />} value="contact@vexamo.dev" label="EMAIL" />
+              <ContactItem
+                icon={<PhoneIcon />}
+                value="+91 7207127948"
+                label="PHONE"
+                href="tel:+917207127948"
+              />
+              <ContactItem
+                icon={<WhatsAppIcon />}
+                value="+91 7207127948"
+                label="WHATSAPP"
+                href="https://wa.me/917207127948?text=I%20would%20like%20to%20collaborate"
+              />
+              <ContactItem
+                icon={<MailIcon />}
+                value="madhavdhavala0@gmail.com"
+                label="EMAIL"
+                href="mailto:madhavdhavala0@gmail.com"
+              />
             </div>
           </div>
 
@@ -229,8 +257,11 @@ const Contact = () => {
 };
 
 // Simple Icon Components
-const ContactItem = ({ icon, value, label }) => (
-  <div className="flex flex-col items-center gap-2 group relative">
+const ContactItem = ({ icon, value, href }) => (
+  <a
+    href={href}
+    className="flex flex-col items-center gap-2 group relative"
+  >
     {/* Icon Container - No border/bg, larger icon */}
     <div className="text-white/70 group-hover:text-white transition-all duration-300 transform group-hover:-translate-y-1">
       {React.cloneElement(icon, { width: "20", height: "20", className: "stroke-current" })}
@@ -241,7 +272,7 @@ const ContactItem = ({ icon, value, label }) => (
       <span className="text-white text-sm font-medium tracking-wide">{value}</span>
       <div className="w-1 h-3 bg-gradient-to-b from-white/50 to-transparent absolute -top-3 left-1/2 -translate-x-1/2 opacity-50" />
     </div>
-  </div>
+  </a>
 );
 
 const MailIcon = (props) => (
@@ -260,8 +291,8 @@ const PhoneIcon = (props) => (
 const WhatsAppIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
-      d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
-      fill="currentColor"
+      d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
     />
   </svg>
 );

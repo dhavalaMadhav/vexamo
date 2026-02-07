@@ -134,9 +134,16 @@ const ServiceItem = ({ service, index }) => {
       className={`service-block group ${layoutClass}`}
       initial="hidden"
       whileInView="active"
-      whileHover={{ scale: 1.01, y: -5 }} // Subtle popup effect on hover
-      viewport={{ once: false, margin: "-20% 0px -20% 0px" }} // Triggers when roughly centered
-      variants={cardVariants}
+      whileHover="hover"
+      viewport={{ once: false, margin: "-20% 0px -20% 0px" }}
+      variants={{
+        ...cardVariants,
+        hover: { 
+          scale: 1.01, 
+          y: -5,
+          transition: { duration: 0.4, ease: "easeOut" }
+        }
+      }}
     >
       {/* DOT ON RAIL - Absolutely centered to the stack rail */}
       <div 
@@ -188,15 +195,50 @@ const ServiceItem = ({ service, index }) => {
         >
           {String(index + 1).padStart(2, "0")}
         </motion.span>
-        <h3 className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
+        <motion.h3 
+          className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60"
+          variants={{
+            hidden: { opacity: 0.3 },
+            active: { opacity: 1 },
+            hover: { 
+              textShadow: "0 0 15px rgba(255,255,255,0.5)",
+              opacity: 1,
+              transition: { duration: 0.3 }
+            }
+          }}
+        >
           {service.title}
-        </h3>
-        <p>{service.desc}</p>
+        </motion.h3>
+
+        <motion.p
+          variants={{
+            hidden: { color: "rgba(255, 255, 255, 0.2)" },
+            active: { color: "rgba(255, 255, 255, 0.8)" },
+            hover: { 
+              color: "rgba(255, 255, 255, 1)",
+              textShadow: "0 0 8px rgba(255,255,255,0.3)"
+            }
+          }}
+        >
+          {service.desc}
+        </motion.p>
+
         <ul className="service-features-services">
           {service.features.map((feature, fIdx) => (
-            <li key={fIdx} className="service-feature-li-services">
+            <motion.li 
+              key={fIdx} 
+              className="service-feature-li-services"
+              variants={{
+                hidden: { color: "rgba(255, 255, 255, 0.2)" },
+                active: { color: "rgba(255, 255, 255, 0.6)" },
+                hover: { 
+                  color: "rgba(255, 255, 255, 1)",
+                  textShadow: "0 0 5px rgba(255,255,255,0.2)"
+                }
+              }}
+            >
               {feature}
-            </li>
+            </motion.li>
           ))}
         </ul>
         <motion.button
