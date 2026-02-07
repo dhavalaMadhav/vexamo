@@ -119,8 +119,8 @@ const ServicesConnector = () => {
         <motion.path
           d="M 20,15 C 20,35 80,35 80,50 C 80,65 20,65 20,85"
           fill="none"
-          stroke="white"
-          strokeWidth="1"
+          stroke="rgba(255, 255, 255, 0.15)"
+          strokeWidth="3"
           strokeLinecap="round"
           style={{
             pathLength: scrollYProgress,
@@ -532,7 +532,13 @@ const Services = () => {
         <motion.section
           className="vixora-services-section bg-transparent"
         >
-          <div className="section-header-container">
+          <motion.div
+            className="section-header-container"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
             <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4 relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
               OUR SERVICES
               <div className="absolute -bottom-2 left-0 w-full h-4 -z-10">
@@ -545,7 +551,7 @@ const Services = () => {
             <p className="section-subtitle-services mt-4 bg-clip-text text-transparent bg-gradient-to-b from-white/90 to-white/50">
               Bespoke digital excellence for forward-thinking brands
             </p>
-          </div>
+          </motion.div>
 
           <div className="services-stack">
             {/* Connector Line absolute to stack */}

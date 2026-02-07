@@ -25,7 +25,7 @@ const CurvedDivider = () => {
                     id="curvePath"
                     d="M-50,200 C300,380 1000,-100 1500,150"
                     fill="none"
-                    stroke="#ffffff"
+                    stroke="rgba(255, 255, 255, 0.1)"
                     strokeWidth="140"
                 />
 

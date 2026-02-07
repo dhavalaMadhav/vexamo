@@ -190,7 +190,13 @@ const WorkSection = () => {
             {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.02)_0%,_transparent_70%)] pointer-events-none" /> */}
 
             {/* Main Header Content - Centered */}
-            <div className="relative z-20 text-center px-4 mb-24 w-full max-w-4xl">
+            <motion.div
+                className="relative z-20 text-center px-4 mb-24 w-full max-w-4xl"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+            >
                 <h3 className="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4 relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
                     Delivered Projects
                     {/* SVG Underline */}
@@ -205,10 +211,16 @@ const WorkSection = () => {
                 <p className="text-[10px] md:text-xs tracking-[0.3em] font-light uppercase mt-4 bg-clip-text text-transparent bg-gradient-to-b from-white/90 to-white/50">
                     Showcasing excellence in digital solutions
                 </p>
-            </div>
+            </motion.div>
 
             {/* Websites Sub-heading */}
-            <div className="relative z-20 px-8 md:px-16 w-full max-w-7xl mb-12">
+            <motion.div
+                className="relative z-20 px-8 md:px-16 w-full max-w-7xl mb-12"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+            >
                 <div className="flex flex-col items-start">
                     <h4 className="text-white text-3xl md:text-5xl font-bold tracking-tighter uppercase">Websites</h4>
                     <p className="text-white/30 text-[10px] md:text-xs tracking-[0.3em] font-light uppercase mt-2">
@@ -216,17 +228,32 @@ const WorkSection = () => {
                     </p>
                     <div className="h-[1px] w-24 bg-white/20 mt-4" />
                 </div>
-            </div>
+            </motion.div>
 
             {/* Static Grid of Cards */}
             <div className="relative z-20 flex flex-wrap justify-center lg:justify-start gap-10 px-8 md:px-16 max-w-7xl w-full mb-16">
                 {projects.map((project, idx) => (
-                    <ProjectCard key={idx} project={project} />
+                    <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
+                        className="w-full md:w-[340px] flex-shrink-0"
+                    >
+                        <ProjectCard project={project} />
+                    </motion.div>
                 ))}
             </div>
 
             {/* Logos Sub-heading */}
-            <div className="relative z-20 px-8 md:px-16 w-full max-w-7xl mb-12">
+            <motion.div
+                className="relative z-20 px-8 md:px-16 w-full max-w-7xl mb-12"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+            >
                 <div className="flex flex-col items-start">
                     <h4 className="text-white text-3xl md:text-5xl font-bold tracking-tighter uppercase">Logos</h4>
                     <p className="text-white/30 text-[10px] md:text-xs tracking-[0.3em] font-light uppercase mt-2">
@@ -234,7 +261,7 @@ const WorkSection = () => {
                     </p>
                     <div className="h-[1px] w-24 bg-white/20 mt-4" />
                 </div>
-            </div>
+            </motion.div>
 
             {/* Logo Pill Layout - Reduced Bottom Spacing */}
             <div className="relative z-20 flex w-full overflow-x-auto pb-4 scrollbar-hide px-8 md:px-16 mb-8 justify-center">

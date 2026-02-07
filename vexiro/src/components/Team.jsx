@@ -72,7 +72,7 @@ const Team = () => {
     const scale = useTransform(smoothProgress, [0, 0.5], [1.5, 1]);
 
     // Image Border Radius: Square -> Rounded
-    const borderRadius = useTransform(smoothProgress, [0.2, 0.5], ["0px", "24px"]);
+    const borderRadius = useTransform(smoothProgress, [0.2, 0.5], ["0px", "60px"]);
 
     // Phase 2: Text Reveal (40% -> 60% scroll)
     const textOpacity = useTransform(smoothProgress, [0.4, 0.6], [0, 1]);
@@ -97,9 +97,9 @@ const Team = () => {
                     style={{ opacity: textOpacity }}
                 >
                     {/* Row 1 */}
-                    <motion.div className="w-full relative bg-white py-2" style={{ y: topTextY }}>
+                    <motion.div className="w-full relative bg-transparent py-2" style={{ y: topTextY }}>
                         <ParallaxText baseVelocity={-2}>
-                            <span className="text-black font-black">BARADHWAJ • UDAY VAMSI •</span>
+                            <span className="text-white/20 font-black">BARADHWAJ • UDAY VAMSI •</span>
                         </ParallaxText>
                     </motion.div>
 
@@ -107,9 +107,9 @@ const Team = () => {
                     <div className="h-[10px] w-full" />
 
                     {/* Row 2 */}
-                    <motion.div className="w-full relative bg-white py-2" style={{ y: bottomTextY }}>
+                    <motion.div className="w-full relative bg-transparent py-2" style={{ y: bottomTextY }}>
                         <ParallaxText baseVelocity={2}>
-                            <span className="text-black font-black">CHARAN KUMAR • MADHAV DHAVALA •</span>
+                            <span className="text-white/20 font-black">CHARAN SAI • MADHAV DHAVALA •</span>
                         </ParallaxText>
                     </motion.div>
                 </motion.div>
@@ -120,7 +120,7 @@ const Team = () => {
                    Z-index 20 to ensure it stays on top.
                 */}
                 <motion.div
-                    className="relative z-20 overflow-hidden shadow-2xl"
+                    className="relative z-20 overflow-hidden shadow-2xl group"
                     style={{
                         scale,
                         width: 'clamp(300px, 80vw, 600px)',
@@ -131,16 +131,33 @@ const Team = () => {
                     <div className="w-full h-full bg-neutral-900/50 backdrop-blur-sm border-2 border-white/30 relative">
                         <img
                             src={`/vexamo-team.jpeg`}
-                            alt="Visual of Team Vexiro"
-                            className="w-full h-full object-cover transition-all duration-700 ease-out"
+                            alt="Visual of Team Vexamo"
+                            className="w-full h-full object-cover transition-all duration-700 ease-out grayscale group-hover:grayscale-0"
                             onError={(e) => {
                                 e.target.onerror = null;
                                 e.target.style.display = 'none';
                                 e.target.parentElement.classList.add('flex', 'items-center', 'justify-center', 'bg-neutral-800');
-                                e.target.parentElement.innerHTML += '<span class="text-white/20 font-bold uppercase tracking-widest">Team Vexiro</span>';
+                                e.target.parentElement.innerHTML += '<span class="text-white/20 font-bold uppercase tracking-widest">Team Vexamo</span>';
                             }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 pointer-events-none" />
+
+                        {/* Start Title Overlay */}
+                        <div className="absolute top-6 left-0 w-full text-center z-30 pointer-events-none">
+                            <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white drop-shadow-[0_4px_4px_rgba(0,0,0,1)]">
+                                OUR TEAM
+                            </h3>
+                            <p className="text-white/80 text-xs md:text-sm uppercase tracking-[0.3em] mt-1 font-light drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
+                                The Minds Behind Vexamo
+                            </p>
+                        </div>
+
+                        {/* End Names Overlay */}
+                        <div className="absolute bottom-6 left-0 w-full text-center z-30 pointer-events-none px-4">
+                            <p className="text-white text-xs md:text-sm uppercase tracking-widest font-medium drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] leading-relaxed">
+                                Baradhwaj • Uday Vamsi • Charan Sai • Madhav Dhavala
+                            </p>
+                        </div>
                     </div>
                 </motion.div>
 

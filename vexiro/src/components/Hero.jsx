@@ -147,7 +147,7 @@ const Hero = () => {
         style={{}}
       >
         <div className="flex items-center gap-4">
-          <img src="/vexamo.svg" alt="Vexamo" className="w-16 h-16 object-contain invert brightness-0" />
+          <img src="/vexamo.svg" alt="Vexamo" className="w-10 h-10 object-contain invert brightness-0" />
           <span className="text-xl font-black tracking-tighter text-white/95 uppercase font-sans">VEXAMO</span>
         </div>
 

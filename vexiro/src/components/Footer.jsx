@@ -51,16 +51,16 @@ const Footer = () => {
           <div className="md:col-span-4">
             <h3 className="text-white/30 text-[10px] md:text-xs tracking-[0.3em] font-light uppercase mb-6">Connect</h3>
             <div className="flex flex-wrap gap-4 mb-8">
-              <SocialLink href="https://www.instagram.com/" icon={<InstagramIcon />} label="Instagram" />
-              <SocialLink href="https://wa.me/917207127948" icon={<WhatsappIcon />} label="WhatsApp" />
+              <SocialLink href="https://www.instagram.com/madhav_dhavala/" icon={<InstagramIcon />} label="Instagram" />
+              <SocialLink href="https://wa.me/917207127948?text=Hello" icon={<WhatsappIcon />} label="WhatsApp" />
               <SocialLink href="tel:+917207127948" icon={<PhoneIcon />} label="Call Us" />
-              <SocialLink href="https://www.linkedin.com/" icon={<LinkedinIcon />} label="LinkedIn" />
+              <SocialLink href="https://www.linkedin.com/in/madhav-dhavala/" icon={<LinkedinIcon />} label="LinkedIn" />
               <SocialLink href="https://twitter.com/" icon={<TwitterIcon />} label="Twitter" />
-              <SocialLink href="https://github.com/" icon={<GithubIcon />} label="Github" />
+              <SocialLink href="https://github.com/dhavalaMadhav" icon={<GithubIcon />} label="Github" />
             </div>
             <div className="space-y-2">
               <p className="text-white/40 text-xs font-light">
-                hello@vexamo.dev
+                madhavdhavala0@gmail.com
               </p>
               <p className="text-white/40 text-xs font-light">
                 Visakhapatnam, Andhra Pradesh, India
