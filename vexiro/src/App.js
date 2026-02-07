@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Hero from './components/Hero';
 import Services from './components/Services';
+import Work from './components/Work';
 import BackgroundSystem from './components/BackgroundSystem';
 import CurvedDivider from './components/CurvedDivider';
 import Work from './components/Work';
@@ -59,6 +60,7 @@ function App() {
       <div className="relative z-10">
         <Hero />
         <Services />
+<<<<<<< HEAD
         <CurvedDivider />
         <Work />
         <Team />
@@ -93,6 +95,9 @@ function App() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </motion.svg>
         </button>
+=======
+        <Work />
+>>>>>>> 85bd57f6baba77404e73c617faa9bb10c0ca50b8
       </div>
     </div>
   );
