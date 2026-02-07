@@ -4,6 +4,7 @@ import Lenis from "lenis";
 const useLocomotiveScroll = () => {
   useEffect(() => {
     const lenis = new Lenis({
+      
       duration: 1.1,
       smoothWheel: true,
       smoothTouch: false,

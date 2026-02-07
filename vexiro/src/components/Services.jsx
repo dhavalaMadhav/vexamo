@@ -2,6 +2,7 @@ import React, { useRef, useMemo } from 'react';
 import { motion, useScroll, useTransform, useMotionTemplate,useSpring } from 'framer-motion';
 import { unifiedVariants, staggerContainer } from '../utils/animations';
 import TextReveal from './TextReveal';
+import videoEditingLoop from '../assets/videos/video_editing_loop.mp4';
 
 // --- Sub-Components for Services Visuals ---
 
@@ -51,8 +52,19 @@ const VideoEditVisual = () => {
   return (
     <div className="visual-container-services">
       <div className="video-editor-container-services">
-        <div className="video-preview-services" style={{ boxShadow: '0 4px 20px rgba(64, 158, 255, 0.15)' }}>
+        <div className="video-preview-services relative overflow-hidden" style={{ boxShadow: '0 4px 20px rgba(64, 158, 255, 0.15)' }}>
           <div className="video-preview-screen-services">
+            <video
+              src={videoEditingLoop}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none transition-opacity duration-700"
+            />
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+            
             <div className="video-waveform-services">
               {waveformBars}
             </div>
@@ -92,53 +104,66 @@ const Circle3DBackground = ({ type }) => (
 
 // --- Connector & Service Item Components ---
 
-const ServiceItem = ({ service, index, total, scrollYProgress }) => {
+const ServiceItem = ({ service, index }) => {
   const Visual = service.type === 'web-dev' ? WebDevVisual :
     service.type === 'logo-design' ? LogoDesignVisual :
       VideoEditVisual;
 
   const layoutClass = index % 2 === 0 ? 'layout-normal' : 'layout-reverse';
 
-  // Calculate generic active range based on index
-  const rangeStart = index / total;
-  const rangeEnd = (index + 1) / total;
-
-  const isActive = useTransform(
-    scrollYProgress,
-    [rangeStart, rangeEnd],
-    [0, 1] 
-  );
-
-  // Refined Transform for isolated activation
-  const activeState = useTransform(
-    scrollYProgress,
-    [rangeStart, rangeStart + 0.05, rangeEnd - 0.05, rangeEnd],
-    [0, 1, 1, 0]
-  );
-  
-  // Mapping properties to this isolated activeState
- const scale = useTransform(activeState, [0,1], [1,1.02]);
-const glowOpacity = useTransform(activeState, [0,1], [0,1]);
-
-  const buttonOpacity = useTransform(activeState, [0.2, 0.8], [0, 1]);
-  const buttonY = useTransform(activeState, [0.2, 0.8], [20, 0]);
-  const pointerEvents = useTransform(activeState, (v) => v > 0.5 ? "auto" : "none");
- 
-  const opacity = useTransform(activeState, [0, 1], [0.5, 1]);
+  // Card Variants with "subtle popup" and "graceful" transition
+  const cardVariants = {
+    hidden: { 
+      opacity: 0.3, 
+      scale: 0.98,
+      y: 20
+    },
+    active: { 
+      opacity: 1, 
+      scale: 1,
+      y: 0,
+      transition: { 
+        duration: 0.8, 
+        ease: [0.25, 1, 0.5, 1] // Gracious ease-out
+      } 
+    }
+  };
 
   return (
     <motion.div
-      className={`service-block ${layoutClass}`}
-      style={{
-        scale,
-        opacity,
-      }}
+      className={`service-block group ${layoutClass}`}
+      initial="hidden"
+      whileInView="active"
+      whileHover={{ scale: 1.01, y: -5 }} // Subtle popup effect on hover
+      viewport={{ once: false, margin: "-20% 0px -20% 0px" }} // Triggers when roughly centered
+      variants={cardVariants}
     >
+      {/* DOT ON RAIL - Absolutely centered to the stack rail */}
+      <div 
+        className="absolute left-1/2 -translate-x-1/2 top-4 w-4 h-4 z-20 pointer-events-none hidden md:block"
+      >
+        <motion.div 
+          className="w-full h-full rounded-full border-2 border-white bg-black relative"
+          initial={{ scale: 0.5, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          viewport={{ once: false }}
+          style={{ boxShadow: `0 0 15px ${service.dotColor}` }}
+        >
+           {/* Inner Fluid Pulse */}
+           <motion.div 
+             className="absolute inset-0 rounded-full" 
+             style={{ backgroundColor: service.dotColor }}
+             animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
+             transition={{ duration: 2, repeat: Infinity }}
+           />
+        </motion.div>
+      </div>
+
       {/* Visual Side */}
       <div className="service-visual-wrapper">
         <motion.div 
             className="service-visual-container"
-            style={{ scale }}
+            transition={{ duration: 0.5 }}
         >
           <div className={`center-glow-services ${service.glowClass}`} />
           <Circle3DBackground type={service.type} />
@@ -148,7 +173,24 @@ const glowOpacity = useTransform(activeState, [0,1], [0,1]);
 
       {/* Content Side */}
       <div className="service-details-wrapper">
-        <h3 className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">{service.title}</h3>
+        <motion.span 
+          className="service-index"
+          style={{ color: service.dotColor }}
+          variants={{
+            hidden: { opacity: 0.3, scale: 1 },
+            active: { 
+              opacity: 1, 
+              scale: 1.1,
+              textShadow: `0 0 20px ${service.dotColor}`,
+              transition: { duration: 0.5 }
+            }
+          }}
+        >
+          {String(index + 1).padStart(2, "0")}
+        </motion.span>
+        <h3 className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
+          {service.title}
+        </h3>
         <p>{service.desc}</p>
         <ul className="service-features-services">
           {service.features.map((feature, fIdx) => (
@@ -159,53 +201,14 @@ const glowOpacity = useTransform(activeState, [0,1], [0,1]);
         </ul>
         <motion.button
           className="service-link-services"
-          style={{
-             opacity: buttonOpacity,
-             y: buttonY,
-             pointerEvents
-          }}
+          whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => window.location.href = `mailto:hello@vexamo.com?subject=Inquiry: ${service.title}`}
         >
           Explore {service.title.split(' ')[0]} Services
         </motion.button>
       </div>
     </motion.div>
-  );
-};
-
-const ServicesConnector = ({ scrollYProgress }) => {
-  // Fix 1: Connector path must start with pathLength = 0 until > 0.05
-  // Fix 2: Origin from center of first visual
-  // Using user supplied coordinates: 
-  // M 25,15 (Visual 1 center roughly)
-  // C 25,30 75,40 75,50 (Curve to Visual 2 center)
-  // C 75,60 25,70 25,85 (Curve to Visual 3 center)
-
-const lineProgress = useTransform(scrollYProgress,[0.05,0.95],[0,1]);
-  const opacity = useTransform(lineProgress, [0, 0.1], [0, 1]);
-
-  return (
-<div className="absolute inset-0 z-[1] pointer-events-none w-full h-full hidden md:block">
-      <svg
-        className="w-full h-full overflow-visible"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-      >
-
-        <motion.path
-          d="M 25,15 C 25,30 75,40 75,50 C 75,60 25,70 25,85"
-          fill="none"
-          stroke="white"
-          strokeWidth="1"
-          strokeLinecap="round"
-          filter="drop-shadow(0 0 6px rgba(255,255,255,0.25))" // Subtle glow trail
-          style={{
-            pathLength: lineProgress,
-            opacity
-          }}
-        />
-      </svg>
-    </div>
   );
 };
 
@@ -220,11 +223,7 @@ const Services = () => {
   offset: ["start center", "end center"]
 });
 
-const smoothScroll = useSpring(scrollYProgress, {
-  stiffness: 200,
-  damping: 25,
-  mass: 0.1
-});
+//   const smoothScroll = useSpring(scrollYProgress, { ... }); // Removed to prevent double-damping with Lenis
 
   const services = useMemo(() => [
     {
@@ -232,6 +231,7 @@ const smoothScroll = useSpring(scrollYProgress, {
       desc: 'High-performance, scalable, modern websites engineered for real-world businesses.',
       type: 'web-dev',
       glowClass: 'glow-web-dev',
+      dotColor: '#ff7a3d', // Matching visual colors
       features: [
         'Custom responsive web applications',
         'E-commerce solutions with seamless checkout',
@@ -245,6 +245,7 @@ const smoothScroll = useSpring(scrollYProgress, {
       desc: 'Minimal, memorable brand identities crafted with precision and strategy.',
       type: 'logo-design',
       glowClass: 'glow-logo-design',
+      dotColor: '#8a3dff',
       features: [
         'Strategic brand discovery',
         'Logo design with conceptual depth',
@@ -258,6 +259,7 @@ const smoothScroll = useSpring(scrollYProgress, {
       desc: 'Cinematic edits and motion visuals designed to capture attention instantly.',
       type: 'video-edit',
       glowClass: 'glow-video-edit',
+      dotColor: '#409eff',
       features: [
         'Commercial video editing',
         '2D/3D motion graphics',
@@ -315,6 +317,22 @@ motion-path {
           padding: 0 16px;
           position: relative;
           z-index: 20;
+        }
+
+        .service-index {
+          font-size: 14px;
+          letter-spacing: 0.4em;
+          opacity: 0.3;
+          margin-bottom: 12px;
+          display: block;
+          font-weight: 600;
+          transition: all 0.5s ease;
+        }
+        
+        /* Active State Classes */
+        .service-index.active {
+          opacity: 1;
+          text-shadow: 0 0 20px currentColor; /* Glow effect */
         }
 
         .services-stack {
@@ -510,7 +528,9 @@ motion-path {
 
         @media (max-width: 1024px) {
            .service-block.layout-normal, .service-block.layout-reverse { flex-direction: column; gap: 24px; text-align: center; padding: 20px 0; min-height: auto; }
+           .service-details-wrapper { align-items: center; }
            .service-details-wrapper h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+           .service-index { margin-bottom: 8px; } /* Mobile adjustment */
            .service-details-wrapper p { margin: 0 auto 1rem; font-size: 0.8rem; line-height: 1.4; }
            .service-features-services { text-align: left; display: inline-block; font-size: 0.8rem; margin-bottom: 1rem; }
            .service-feature-item-services { margin-bottom: 4px; padding-left: 16px; }
@@ -549,18 +569,22 @@ motion-path {
              viewport={{ once: true }}
              ref={containerRef}
           >
-            {/* Connector Line passing shared scroll progress */}
-           <ServicesConnector scrollYProgress={smoothScroll} />
+            {/* SUBTLE VERTICAL RAIL - Replacing Animated Connector */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-0 h-full w-px bg-gradient-to-b from-transparent via-white/20 to-transparent blur-[0.3px] pointer-events-none hidden md:block" />
+            
+            {/* ACTIVE FLUID SCROLL RAIL - "Connects the dots" */}
+            <motion.div 
+              className="absolute left-1/2 -translate-x-1/2 top-0 w-[2px] bg-gradient-to-b from-white via-white/80 to-transparent origin-top z-10 hidden md:block"
+              style={{ scaleY: scrollYProgress, height: '100%' }}
+            />
 
-            {services.map((service, idx) => (
-              <ServiceItem
-                key={idx}
-                index={idx}
-                total={services.length}
-                service={service}
-               scrollYProgress={smoothScroll}
-              />
-            ))}
+             {services.map((service, idx) => (
+               <ServiceItem
+                 key={idx}
+                 index={idx}
+                 service={service}
+               />
+             ))}
           </motion.div>
         </motion.section>
       </div>

@@ -5,18 +5,13 @@ import { unifiedVariants } from '../utils/animations';
 const TextReveal = ({ children, className = "", delay = 0 }) => {
   return (
     <div className={`overflow-hidden ${className}`}>
-      <motion.div
-        variants={unifiedVariants}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-10%" }}
-        custom={delay} 
-        // Note: unifiedVariants doesn't currently use 'custom' for delay in the 'show' variant 
-        // but we can override transition if needed. 
-        // For simplicity, we rely on the default duration/ease in unifiedVariants.
-        // If we want stagger, we usually use staggerContainer on parent.
-        // But for single text reveal, this is fine.
-      >
+     <motion.div
+  initial={{ opacity: 0, y: 16 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, ease: "easeOut" }}
+  viewport={{ once: true, margin: "-80px" }}
+>
+
         {children}
       </motion.div>
     </div>

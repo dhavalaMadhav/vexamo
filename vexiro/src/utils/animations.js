@@ -25,12 +25,9 @@ export const unifiedVariants = {
 };
 
 export const staggerContainer = {
-  hidden: { opacity: 0 },
+  hidden: {},
   show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: STAGGER_DELAY
-    }
+    transition: {}
   }
 };
 

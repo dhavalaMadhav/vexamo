@@ -155,37 +155,65 @@ const ProjectCard = ({ project }) => {
     );
 };
 
-const LogoPill = ({ title, desc, color, logo, index }) => {
+// Externalized variants for high-performance entrance
+const containerVariants = {
+    hidden: { opacity: 0 },
+    show: { 
+        opacity: 1, 
+        transition: { 
+            staggerChildren: 0.1,
+            delayChildren: 0.2
+        } 
+    }
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 20, filter: 'blur(10px)' },
+    show: { 
+        opacity: 1, 
+        y: 0, 
+        filter: 'blur(0px)',
+        transition: { 
+            type: "spring", 
+            stiffness: 70, 
+            damping: 20 
+        } 
+    }
+};
+
+const LogoPill = React.memo(({ title, desc, color, logo, index }) => {
     return (
+        // OPTIMIZED ACCORDION: Container expands width to push neighbors (visual stack effect)
         <motion.div
-            variants={{
-                hidden: { opacity: 0, scale: 0.95 },
-                show: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: "easeOut" } }
-            }}
-            className="relative flex items-center justify-end px-3 py-2 rounded-full overflow-hidden w-[160px] hover:w-[360px] flex-shrink-0 -ml-12 first:ml-0 group transition-[width] duration-500 ease-spring shadow-2xl"
+            variants={itemVariants}
+            className="relative flex items-center justify-end px-3 py-2 rounded-full overflow-hidden h-[120px] w-[140px] hover:w-[360px] flex-shrink-0 -ml-6 first:ml-0 group transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] shadow-xl hover:shadow-2xl border border-white/10 will-change-[width]"
             style={{
-                background: `linear-gradient(90deg, ${color}33 0%, ${color}11 100%)`,
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                background: `linear-gradient(90deg, ${color}22 0%, ${color}08 100%)`,
-                zIndex: 100 - index
+                background: `linear-gradient(90deg, ${color}22 0%, ${color}05 100%)`, // Subtler gradient (22% start, 5% end)
+                backdropFilter: 'blur(5px)', // Reduced blur as requested
+                zIndex: 100 - index // Proper stacking order
             }}
         >
-            {/* Text hidden initially, revealed on hover */}
-            <div className="flex flex-col gap-0.5 pr-6 text-right flex-1 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto transition-all duration-500 overflow-hidden whitespace-nowrap">
+            {/* Text Layer - Absolute positioned to avoid layout trashing during width change */}
+            <div className="absolute right-32 top-1/2 -translate-y-1/2 flex flex-col gap-0.5 pr-4 text-right opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 delay-100 overflow-hidden whitespace-nowrap pointer-events-none">
                 <h4 className="text-white text-xl font-black tracking-tighter" style={{ color: color }}>{title}</h4>
                 <p className="text-white/50 text-[8px] font-bold uppercase tracking-[0.2em] leading-tight">{desc}</p>
             </div>
 
-            <div className="w-24 h-24 flex-shrink-0 flex items-center justify-center relative bg-transparent">
+            {/* Logo Container - Pinned via flex justify-end */}
+            <div className="w-24 h-24 min-w-[6rem] flex-shrink-0 flex items-center justify-center relative bg-transparent z-10">
                 <img
                     src={logo}
                     alt={title}
+                    width="96"
+                    height="96"
                     className={`w-full h-full object-contain scale-90 relative z-10 drop-shadow-lg ${index === 3 ? 'rounded-full' : ''}`}
+                    loading="eager" 
+                    decoding="async"
                 />
             </div>
         </motion.div>
     );
-};
+});
 
 const WorkSection = () => {
     return (
@@ -224,10 +252,11 @@ const WorkSection = () => {
             </div>
 
             {/* Static Grid of Cards */}
-            <motion.div 
-                variants={staggerContainer}
-                initial="hidden"
-               animate="show"
+          <motion.div 
+  variants={staggerContainer}
+  initial="hidden"
+  whileInView="show"
+  viewport={{ once: true, margin: "-80px" }}
              //   viewport={{ once: true }}
                 className="relative z-20 flex flex-wrap justify-center lg:justify-start gap-10 px-8 md:px-16 max-w-7xl w-full mb-16"
             >
@@ -247,14 +276,14 @@ const WorkSection = () => {
                 </div>
             </div>
 
-            {/* Logo Pill Layout - Reduced Bottom Spacing */}
+            {/* Logo Pill Layout - Optimized Container with variants */}
             <div className="relative z-20 flex w-full overflow-x-auto pb-4 scrollbar-hide px-8 md:px-16 mb-8 justify-center">
                 <motion.div 
-                    variants={staggerContainer}
+                    variants={containerVariants}
                     initial="hidden"
                     whileInView="show"
-                    viewport={{ once: true }}
-                    className="flex flex-row items-center"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="flex flex-row items-center pl-12"
                 >
                     <LogoPill
                         index={0}

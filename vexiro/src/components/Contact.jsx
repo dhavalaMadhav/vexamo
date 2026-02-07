@@ -5,6 +5,7 @@ import techImg from '../assets/hero/tech_1.png';
 import { animations } from '../utils/animations';
 import TextReveal from './TextReveal';
 
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -55,11 +56,10 @@ const Contact = () => {
             {/* Text Container - Moved Above Images */}
             <div className="flex flex-col items-start w-full pl-4 md:pl-0 max-w-md mb-8">
               {/* "Team Building" Title - Scrollytelling Style */}
-              <p className="text-white/30 text-[10px] md:text-xs tracking-[0.3em] font-light uppercase mt-2">
+              <div className="text-white/30 text-[10px] md:text-xs tracking-[0.3em] font-light uppercase mt-2">
                 Team Building
                 <div className="h-[1px] w-12 bg-white/20 mt-2" />
-              </p>
-
+              </div>
               {/* Team Description */}
               <p className="text-white/60 text-sm font-light leading-relaxed text-left mt-4">
                 Our team of designers and engineers work in perfect harmony to build digital products that stand the test of time.

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity, useAnimationFrame } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity, useAnimationFrame, useInView } from 'framer-motion';
 import TextReveal from './TextReveal';
 
 const wrap = (min, max, v) => {
@@ -22,7 +22,14 @@ const ParallaxText = ({ children, baseVelocity = 100 }) => {
     const x = useTransform(baseX, (v) => `${wrap(-20, -45, v)}%`);
 
     const directionFactor = useRef(1);
+    
+    // OPTIMIZATION: Only run animation frame when in view
+    const containerRef = useRef(null);
+    const isInView = useInView(containerRef, { margin: "100px" });
+
     useAnimationFrame((t, delta) => {
+        if (!isInView) return; // Stop loop if off-screen
+
         let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
         if (velocityFactor.get() < 0) {
@@ -37,7 +44,7 @@ const ParallaxText = ({ children, baseVelocity = 100 }) => {
     });
 
     return (
-        <div className="parallax-text-wrap overflow-hidden whitespace-nowrap flex flex-nowrap m-0 leading-[0.8]">
+        <div ref={containerRef} className="parallax-text-wrap overflow-hidden whitespace-nowrap flex flex-nowrap m-0 leading-[0.8]">
             <motion.div className="flex whitespace-nowrap flex-nowrap items-center text-4xl md:text-7xl font-black uppercase tracking-tighter" style={{ x }}>
                 {/* Repeat children for infinite effect */}
                 {[...Array(8)].map((_, i) => (
@@ -57,25 +64,21 @@ const Team = () => {
         offset: ["start start", "end end"]
     });
 
-    const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
-    });
+//     const smoothProgress = useSpring(scrollYProgress, { ... }); // Removed for performance unification with Lenis
 
     // Modified animations for a more "cinematic window" feel
-    const scale = useTransform(smoothProgress, [0, 0.5], [1.2, 1]); // Reduced scale for less jarring effect
+    const scale = useTransform(scrollYProgress, [0, 0.5], [1.2, 1]); // Reduced scale for less jarring effect
     
     // Morph from rectangle to a cinematic pill/window shape
-    const borderRadius = useTransform(smoothProgress, [0.1, 0.5], ["0px", "160px"]); 
+    const borderRadius = useTransform(scrollYProgress, [0.1, 0.5], ["0px", "160px"]); 
     
     // Text Reveal logic
-    const textOpacity = useTransform(smoothProgress, [0.35, 0.55], [0, 1]);
-    const topTextY = useTransform(smoothProgress, [0.35, 0.55], [100, 0]);
-    const bottomTextY = useTransform(smoothProgress, [0.35, 0.55], [-100, 0]);
+    const textOpacity = useTransform(scrollYProgress, [0.35, 0.55], [0, 1]);
+    const topTextY = useTransform(scrollYProgress, [0.35, 0.55], [100, 0]);
+    const bottomTextY = useTransform(scrollYProgress, [0.35, 0.55], [-100, 0]);
 
     // Header fade out as image shrinks
-    const headerOpacity = useTransform(smoothProgress, [0, 0.2], [1, 0]);
+    const headerOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
     return (
         <section

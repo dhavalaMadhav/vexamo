@@ -8,6 +8,10 @@
     @apply bg-[#050507] text-white antialiased font-sans;
   }
 }
+.gpu {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
 
 .font-cursive {
   font-family: 'Dancing Script', cursive;
