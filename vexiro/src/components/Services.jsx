@@ -1,6 +1,6 @@
 import React, { useRef, useMemo } from 'react';
-import { motion, useScroll, useTransform, useMotionTemplate,useSpring } from 'framer-motion';
-import { unifiedVariants, staggerContainer } from '../utils/animations';
+import { motion, useScroll} from 'framer-motion';
+import {staggerContainer } from '../utils/animations';
 import TextReveal from './TextReveal';
 import videoEditingLoop from '../assets/videos/video_editing_loop.mp4';
 

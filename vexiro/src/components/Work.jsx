@@ -33,24 +33,6 @@ const projects = [
     }
 ];
 
-// Custom Corner Button Component (The "Visit Site" button in the curve)
-const CornerButton = ({ link }) => (
-    <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="absolute bottom-0 right-0 w-[120px] h-[60px] flex items-center justify-center bg-transparent z-20 group/btn"
-    >
-        {/* The Button connecting to the curve */}
-        <div className="relative w-full h-full flex items-center justify-center">
-            {/* SVG for the Inverted Corner Shape logic if needed, but for now just the button placed in the void */}
-            <div className="bg-white text-black px-6 py-2 rounded-full font-bold text-[10px] tracking-widest uppercase hover:scale-105 transition-transform">
-                Visit ↗
-            </div>
-        </div>
-    </a>
-);
-
 const ProjectCard = ({ project }) => {
     return (
         <motion.div 

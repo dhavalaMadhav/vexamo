@@ -1,7 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { unifiedVariants } from '../utils/animations';
-
 const TextReveal = ({ children, className = "", delay = 0 }) => {
   return (
     <div className={`overflow-hidden ${className}`}>

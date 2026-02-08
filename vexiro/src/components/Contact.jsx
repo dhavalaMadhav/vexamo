@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import techImg from '../assets/hero/tech_1.png';
 
 const Contact = () => {
   const [formData, setFormData] = useState({

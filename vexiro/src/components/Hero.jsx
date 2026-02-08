@@ -72,7 +72,7 @@ const Hero = () => {
     }, 2000);
 
     return () => clearTimeout(startTimeout);
-  }, []);
+  }, [words.length]);
 
   const containerVariants = {
     hidden: { opacity: 0 },

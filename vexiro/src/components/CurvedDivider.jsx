@@ -1,5 +1,4 @@
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import TextReveal from './TextReveal';
 
 const CurvedDivider = () => {
     const { scrollYProgress } = useScroll();
