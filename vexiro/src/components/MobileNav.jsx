@@ -58,7 +58,10 @@ const MobileNav = () => {
     return (
         <div className="fixed bottom-0 left-0 w-full h-[80px] z-50 lg:hidden pointer-events-none">
             {/* Background Blur Container */}
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-xl rounded-t-[30px] border-t border-white/10 pointer-events-auto flex items-center justify-between px-8">
+            <div
+                className="absolute inset-0 bg-black/60 backdrop-blur-xl border-t border-white/10 pointer-events-auto flex items-center justify-between px-8"
+                style={{ borderRadius: '50% 50% 0 0 / 24px 24px 0 0' }}
+            >
 
                 {/* Left: Navigation Indicators (Horizontal Row of Vertical Lines) */}
                 <div className="flex items-center gap-6">

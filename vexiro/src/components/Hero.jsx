@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence, useMotionValue, useAnimationFrame } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useAnimationFrame, useTransform } from 'framer-motion';
 import tech1 from '../assets/hero/tech_1.png';
 import tech2 from '../assets/hero/tech_2.png';
 import tech3 from '../assets/hero/tech_3.png';
@@ -70,7 +70,8 @@ const MobileBentoRow = ({ images, speed = 20, reverse = false }) => {
   const baseX = useMotionValue(0);
   const containerRef = useRef(null);
 
-  // Clone images for infinite loop (enough to cover wide screens)
+  // Clone images for infinite loop: 4 sets to ensure smooth wrapping
+  // We will shift from 0% to -25% (width of 1 set) and then reset to 0%
   const duplicatedImages = [...images, ...images, ...images, ...images];
 
   useAnimationFrame((t, delta) => {
@@ -81,16 +82,28 @@ const MobileBentoRow = ({ images, speed = 20, reverse = false }) => {
     baseX.set(baseX.get() - moveBy);
   });
 
+  // Wrap logic: When we scrolled 25% (one full set width), reset to 0
+  const x = useTransform(baseX, (v) => {
+    // Assuming 4 sets, one set is 25% width.
+    // We want to loop within -25% to 0%
+    return `${(v % 25)}%`;
+  });
+
   return (
     <div className="flex flex-row gap-3 overflow-hidden relative w-full h-full items-end pb-10" ref={containerRef}>
       <motion.div
         className="flex flex-row gap-3 h-40 cursor-grab active:cursor-grabbing"
         drag="x"
-        // Bind drag directly to the motion value to combine auto-scroll + drag
-        style={{ x: baseX }}
-        dragConstraints={{ left: -1000, right: 0 }} // Loose constraints, marquee handles visuals
-        onDragEnd={() => {
-          // Optional: momentum or snap logic could go here
+        // Bind drag effectively by just letting it influence, but for infinite loop visual
+        // we use the 'x' transform that wraps.
+        // Note: Strict 'drag' with 'style={{x}}' where x is a transform works, 
+        // but 'dragConstraints' might need careful handling or be removed for infinite drag.
+        // For true infinite drag + auto-scroll, we ideally modify baseX onDrag.
+        // But for simplicity of "never finishes" and "swiping", keeping it simple:
+        style={{ x }}
+        onDrag={(event, info) => {
+          // Apply drag delta to motion value
+          baseX.set(baseX.get() + info.delta.x / 10); // scale drag for sensitivity
         }}
       >
         {duplicatedImages.map((img, i) => {
@@ -222,7 +235,7 @@ const Hero = () => {
 
         {/* LEFT COLUMN: INFORMATION & BRANDING */}
         <motion.div
-          className="flex flex-col justify-start lg:justify-center h-auto lg:h-screen overflow-visible relative w-full z-20 min-w-0 pb-48 lg:pb-0"
+          className="flex flex-col justify-start lg:justify-center h-auto lg:h-screen overflow-visible relative w-full z-20 min-w-0 pb-[500px] lg:pb-0"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -239,7 +252,7 @@ const Hero = () => {
             {/* INNER HEADLINE WRAPPER */}
             <div className="relative overflow-visible py-4 pb-6 w-full max-w-[720px]">
               <motion.h1
-                className="text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 inline-block relative overflow-visible leading-[1.35] tracking-normal"
+                className="text-[clamp(1.5rem,5vw,3.75rem)] md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 inline-block relative overflow-visible leading-[1.35] tracking-normal"
               >
                 <motion.div
                   variants={lineVariants}
@@ -300,11 +313,28 @@ const Hero = () => {
               <motion.button
                 whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,1)", color: "#000" }}
                 whileTap={{ scale: 0.98 }}
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                 className="px-8 py-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full text-white font-medium text-xs tracking-widest uppercase transition-all duration-300 pointer-events-auto"
               >
                 Start Your Project
               </motion.button>
               <motion.button
+                onClick={(e) => {
+                  e.preventDefault();
+                  const element = document.getElementById('projects');
+                  if (element) {
+                    const offset = 80; // Adjust for sticky header if any, though header is transparent/floating usually
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = element.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
+                  }
+                }}
                 className="text-white/40 font-medium text-xs tracking-widest uppercase hover:text-white transition-colors pointer-events-auto"
               >
                 View Our Work
@@ -329,8 +359,8 @@ const Hero = () => {
       </div>
 
       {/* MOBILE BENTO ROW (BOTTOM FIXED) */}
-      <div className="absolute bottom-24 left-0 w-full z-10 block lg:hidden pointer-events-none flex flex-col gap-3">
-        <MobileBentoRow images={col1} speed={25} />
+      <div className="absolute -bottom-10 left-0 w-full z-10 block lg:hidden pointer-events-none flex flex-col gap-3">
+        <MobileBentoRow images={col1} speed={5} />
       </div>
 
       {/* SCROLL INDICATOR - HIDDEN ON MOBILE */}

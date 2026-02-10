@@ -77,7 +77,7 @@ const ProjectCard = ({ project }) => {
                 <div className="flex flex-col h-full relative z-10">
                     {/* Category Tag */}
                     <div className="mb-6">
-                        <span className="bg-black/80 border border-white/10 px-4 py-1.5 rounded-full text-[8px] font-bold tracking-[0.2em] text-[#ff4d29] uppercase">
+                        <span className="bg-transparent border border-white/10 px-4 py-1.5 rounded-full text-[9px] font-bold tracking-[0.2em] text-[#ff4d29] uppercase whitespace-nowrap">
                             {project.category}
                         </span>
                     </div>
@@ -179,13 +179,13 @@ const WorkSection = () => {
 
             {/* Main Header Content - Centered */}
             <motion.div
-                className="relative z-20 text-center px-4 mb-24 w-full max-w-4xl"
+                className="relative z-20 text-center px-4 mb-12 w-full max-w-4xl"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
             >
-                <h3 className="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4 relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
+                <h3 className="text-[clamp(1.5rem,8vw,3.5rem)] md:text-6xl font-black tracking-tighter uppercase mb-4 relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
                     Delivered Projects
                     {/* SVG Underline */}
                     <div className="absolute -bottom-2 left-0 w-full h-4 -z-10">
@@ -210,7 +210,7 @@ const WorkSection = () => {
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
                 <div className="flex flex-col items-start">
-                    <h4 className="text-white text-3xl md:text-5xl font-bold tracking-tighter uppercase">Websites</h4>
+                    <h4 className="text-[clamp(1.5rem,8vw,3.5rem)] md:text-5xl font-bold tracking-tighter uppercase">Websites</h4>
                     <p className="text-white/30 text-[10px] md:text-xs tracking-[0.3em] font-light uppercase mt-2">
                         Bespoke digital experiences / Performance engineering
                     </p>
@@ -243,7 +243,7 @@ const WorkSection = () => {
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
                 <div className="flex flex-col items-start">
-                    <h4 className="text-white text-3xl md:text-5xl font-bold tracking-tighter uppercase">Logos</h4>
+                    <h4 className="text-[clamp(1.5rem,8vw,3.5rem)] md:text-5xl font-bold tracking-tighter uppercase">Logos</h4>
                     <p className="text-white/30 text-[10px] md:text-xs tracking-[0.3em] font-light uppercase mt-2">
                         Visual Identities / Brand Strategy
                     </p>
@@ -252,7 +252,10 @@ const WorkSection = () => {
             </motion.div>
 
             {/* Logo Pill Layout - Reduced Bottom Spacing */}
-            <div className="relative z-20 flex w-full overflow-x-auto pb-4 scrollbar-hide px-8 md:px-16 mb-8 justify-start md:justify-center">
+            <div
+                className="relative z-20 flex w-full overflow-x-auto pb-4 scrollbar-hide px-8 md:px-16 mb-8 justify-start md:justify-center"
+                style={{ scrollBehavior: 'smooth' }}
+            >
                 <div className="flex flex-row items-center">
                     {/* Render LogoPills with active state logic */}
                     {[
