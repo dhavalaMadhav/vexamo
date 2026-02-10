@@ -359,7 +359,7 @@ const Hero = () => {
       </div>
 
       {/* MOBILE BENTO ROW (BOTTOM FIXED) */}
-      <div className="absolute -bottom-10 left-0 w-full z-10 block lg:hidden pointer-events-none flex flex-col gap-3">
+      <div className="absolute bottom-10 left-0 w-full z-10 block lg:hidden pointer-events-none flex flex-col gap-3">
         <MobileBentoRow images={col1} speed={5} />
       </div>
 
