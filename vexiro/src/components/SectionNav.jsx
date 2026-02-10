@@ -55,10 +55,14 @@ const SectionNav = () => {
             className="fixed right-8 top-[45%] -translate-y-1/2 z-50 hidden md:flex flex-col items-end gap-6"
           >
             {sections.map((section) => (
-              <motion.div
+              <motion.a
                 key={section.id}
+                href={`#${section.id}`}
                 className="group relative flex items-center"
-                onClick={() => scrollToSection(section.id)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(section.id);
+                }}
               >
                 <span className="mr-4 text-[10px] font-bold tracking-widest uppercase text-white/0 group-hover:text-white/60 transition-all duration-300 pointer-events-none">
                   {section.name}
@@ -74,7 +78,7 @@ const SectionNav = () => {
                     className="rounded-full transition-all duration-300 group-hover:bg-white"
                   />
                 </div>
-              </motion.div>
+              </motion.a>
             ))}
           </motion.div>
 

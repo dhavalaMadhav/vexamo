@@ -142,6 +142,7 @@ const Services = () => {
       title: 'Website Development',
       desc: 'High-performance, scalable, modern websites engineered for real-world businesses.',
       type: 'web-dev',
+      dotColor: '#ff7a3d', // Matching visual colors
       glowClass: 'glow-web-dev',
       features: [
         'Custom responsive web applications',
@@ -155,6 +156,7 @@ const Services = () => {
       title: 'Logo & Brand Identity',
       desc: 'Minimal, memorable brand identities crafted with precision and strategy.',
       type: 'logo-design',
+      dotColor: '#8a3dff',
       glowClass: 'glow-logo-design',
       features: [
         'Strategic brand discovery and positioning',
@@ -168,6 +170,7 @@ const Services = () => {
       title: 'Video Editing & Motion',
       desc: 'Cinematic edits and motion visuals designed to capture attention instantly.',
       type: 'video-edit',
+      dotColor: '#409eff',
       glowClass: 'glow-video-edit',
       features: [
         'Commercial and promotional video editing',
@@ -273,6 +276,21 @@ const Services = () => {
         .service-details-wrapper {
           flex: 1;
           padding: 40px 0;
+        }
+
+        .service-index {
+          font-size: 14px;
+          letter-spacing: 0.4em;
+          opacity: 0.3;
+          margin-bottom: 12px;
+          display: block;
+          font-weight: 600;
+          transition: all 0.5s ease;
+        }
+        
+        .service-index.active {
+          opacity: 1;
+          text-shadow: 0 0 20px currentColor;
         }
 
         .service-details-wrapper h3 {
@@ -441,6 +459,7 @@ const Services = () => {
         }
 
         /* SVG Components Styles */
+        /* Visuals Colors from Reference */
         .code-window-header-services { display: flex; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
         .window-dots-services { display: flex; gap: 8px; margin-right: 20px; }
         .dot-services { width: 12px; height: 12px; border-radius: 50%; }
@@ -661,6 +680,12 @@ const Services = () => {
 
                   {/* Content Side */}
                   <div className="service-details-wrapper">
+                    <span
+                      className="service-index"
+                      style={{ color: service.dotColor }}
+                    >
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
                     <h3 className="text-3xl md:text-5xl font-bold tracking-tighter uppercase bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">{service.title}</h3>
                     <p>{service.desc}</p>
                     <ul className="service-features-services">
