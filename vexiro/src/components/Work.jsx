@@ -83,7 +83,7 @@ const ProjectCard = ({ project }) => {
                     </div>
 
                     {/* Project Title */}
-                    <h4 className="text-[1.5rem] md:text-[2.5rem] font-bold mb-4 tracking-tighter uppercase text-white">
+                    <h4 className="text-[1.5rem] md:text-[2rem] font-bold mb-4 tracking-tighter uppercase text-white">
                         {project.name}
                     </h4>
 
