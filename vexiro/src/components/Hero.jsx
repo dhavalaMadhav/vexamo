@@ -250,18 +250,18 @@ const Hero = () => {
             </motion.p>
 
             {/* INNER HEADLINE WRAPPER */}
-            <div className="relative overflow-visible py-4 pb-6 w-full max-w-[720px]">
+            <div className="relative overflow-visible py-4 pb-6 w-full max-w-full md:max-w-[720px]">
               <motion.h1
-                className="text-[clamp(1.5rem,5vw,3.75rem)] md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 inline-block relative overflow-visible leading-[1.35] tracking-normal"
+                className="text-[2.5rem] leading-tight md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 inline-block relative overflow-visible tracking-normal break-words"
               >
                 <motion.div
                   variants={lineVariants}
                   className="inline"
                 >
-                  <span className="inline mr-[0.4em] bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">We Design, Build & Deliver</span>
+                  <span className="inline mr-[0.2em] bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">We Design, Build & Deliver</span>
 
                   {/* ROTATOR */}
-                  <span className="inline-flex relative h-[1.3em] items-center overflow-hidden min-w-[7ch] ml-1">
+                  <span className="inline-flex relative h-[1.3em] items-baseline overflow-hidden min-w-[7ch] ml-0 align-baseline">
                     <span className="block italic font-cursive opacity-0 select-none whitespace-nowrap h-full leading-none">
                       Experiences.
                     </span>
@@ -276,7 +276,7 @@ const Hero = () => {
                           duration: 0.8,
                           ease: [0.16, 1, 0.3, 1]
                         }}
-                        className="absolute left-0 top-1 block italic font-cursive text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 whitespace-nowrap"
+                        className="absolute left-0 top-0 block italic font-cursive text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 whitespace-nowrap"
                       >
                         {words[index]}
                         <div className="absolute -bottom-2 left-0 w-full h-3">
