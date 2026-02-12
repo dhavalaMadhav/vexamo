@@ -100,7 +100,7 @@ const Hero = () => {
     const startTimeout = setTimeout(() => {
       const interval = setInterval(() => {
         setIndex((prev) => (prev + 1) % words.length);
-      }, 3500); // Slower, calm rhythm
+      }, 4500); // Slower, calm rhythm
       return () => clearInterval(interval);
     }, 2000);
 
@@ -261,46 +261,68 @@ const Hero = () => {
               </motion.p>
 
               {/* INNER HEADLINE WRAPPER */}
-              <div className="relative overflow-visible py-2 pb-6 w-full max-w-[720px]">
+              <div className="relative overflow-visible py-2 pb-6 w-full max-w-[900px]">
                 <motion.h1
                   className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight"
                 >
                   <motion.div variants={lineVariants} className="flex flex-col items-start">
-                    <span className="block text-white">We Design,</span>
-                    <span className="block text-white">Build & Deliver</span>
-                    
-                    {/* Rotating Word - Distinct Line */}
-                    <span className="block relative h-[1.3em] overflow-hidden min-w-[200px] mt-2">
-                       {/* Placeholder for layout */}
-                      <span className="block italic font-cursive opacity-0 h-full leading-none">Experiences.</span>
-                      
-                      <AnimatePresence mode="wait">
-                        <motion.span
-                          key={words[index]}
-                          initial={{ y: "100%", opacity: 0 }}
-                          animate={{ y: "0%", opacity: 1 }}
-                          exit={{ y: "-100%", opacity: 0 }}
-                          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                          className="absolute left-0 top-0 block italic font-cursive text-white whitespace-nowrap"
-                        >
-                          {words[index]}
-                          {/* Underline - Synchronized and Visible */}
-                          <div className="absolute -bottom-2 left-0 w-full h-3">
-                            <svg viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                              <motion.path
-                                d="M2.00025 7.00001C35.9529 3.01602 125.792 -2.12693 197.994 3.00631"
-                                stroke="#5da9ff" 
-                                strokeWidth="5"
-                                strokeLinecap="round"
-                                initial={{ pathLength: 0, opacity: 0 }}
-                                animate={{ pathLength: 1, opacity: 1 }}
-                                transition={{ duration: 0.6, ease: "easeOut" }} // Synced with text
-                              />
-                            </svg>
+                     {/* --- COMPONENTS --- */}
+                    {(() => {
+                      const RotatingWord = ({ strokeColor, className }) => (
+                        <span className={`block relative h-[1.3em] overflow-visible min-w-[200px] ${className}`}>
+                           {/* Invisible Shim */}
+                           <span className="block italic font-cursive opacity-0 h-full leading-none px-1">Experiences.</span>
+                           
+                           <AnimatePresence mode="wait">
+                             <motion.span
+                               key={words[index]}
+                                initial={{ y: "40%", opacity: 0, filter: "blur(4px)" }}
+                        animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
+                        exit={{ y: "-40%", opacity: 0, filter: "blur(4px)" }}
+                               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                               className="absolute left-0 top-0 block italic font-cursive text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 whitespace-nowrap px-1"
+                               style={{ transformOrigin: "bottom center" }}
+                             >
+                               {words[index]}
+                               {/* Underline - Configurable Color */}
+                               <div className="absolute -bottom-2 md:-bottom-4 left-0 w-full h-4 md:h-6">
+                                 <svg viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                                   <motion.path
+                                     d="M2.00025 7.00001C35.9529 3.01602 125.792 -2.12693 197.994 3.00631"
+                                     stroke={strokeColor} 
+                                     strokeWidth="5"
+                                     strokeLinecap="round"
+                                     initial={{ pathLength: 0, opacity: 0 }}
+                                     animate={{ pathLength: 1, opacity: 1 }}
+                                     transition={{ duration: 0.8, ease: "easeOut" }} 
+                                   />
+                                 </svg>
+                               </div>
+                             </motion.span>
+                           </AnimatePresence>
+                        </span>
+                      );
+
+                      return (
+                        <>
+                          {/* MOBILE LAYOUT (Stacked + BLUE Underline) */}
+                          <div className="lg:hidden flex flex-col items-start text-left">
+                              <span className="block text-white">We Design,</span>
+                              <span className="block text-white">Build & Deliver</span>
+                              <RotatingWord strokeColor="#5da9ff" className="mt-1" />
                           </div>
-                        </motion.span>
-                      </AnimatePresence>
-                    </span>
+
+                          {/* DESKTOP LAYOUT (Split Lines + WHITE Underline) */}
+                          <div className="hidden lg:flex flex-col items-start">
+                              <span className="block text-white">We Design, Build &</span>
+                              <div className="flex items-center gap-4">
+                                <span className="block text-white">Deliver</span>
+                                <RotatingWord strokeColor="rgba(255, 255, 255, 0.3)" className="translate-y-2" />
+                              </div>
+                          </div>
+                        </>
+                      );
+                    })()}
                   </motion.div>
                 </motion.h1>
               </div>
