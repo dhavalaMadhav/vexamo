@@ -252,7 +252,7 @@ const Hero = () => {
             {/* INNER HEADLINE WRAPPER */}
             <div className="relative overflow-visible py-4 pb-6 w-full max-w-full md:max-w-[720px]">
               <motion.h1
-                className="text-[2.5rem] leading-tight md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 inline-block relative overflow-visible tracking-normal break-words"
+                className="text-[2rem] leading-tight md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 inline-block relative overflow-visible tracking-normal break-words"
               >
                 <motion.div
                   variants={lineVariants}
