@@ -99,7 +99,7 @@ const ServicesConnector = () => {
   });
 
   return (
-    <div ref={ref} className="absolute inset-0 z-0 pointer-events-none w-full h-full hidden md:block">
+    <div ref={ref} className="absolute inset-0 z-0 pointer-events-none w-full h-full hidden lg:block">
       <svg
         className="w-full h-full overflow-visible"
         viewBox="0 0 100 100"
@@ -529,38 +529,42 @@ const Services = () => {
             align-items: flex-start;
           }
           
-          /* Reduce Stack Gap */
-          .services-stack {
-            gap: 12px; /* Reduced from 30px */
-          }
+           /* Reduce Stack Gap & Matching Hero Padding */
+           .services-stack {
+             gap: 12px; 
+             padding: 0 24px; /* px-6 equivalent */
+           }
+           @media (min-width: 768px) {
+             .services-stack { padding: 0 48px; } /* px-12 equivalent */
+           }
            
-           /* Ordering Logic for Mobile */
-           .service-details-wrapper { order: 1; width: 100%; }
-           .service-visual-wrapper { order: 2; width: 100%; }
-           /* Mobile Button is duplicated in JSX, handled there */
+            /* Ordering Logic for Mobile */
+            .service-details-wrapper { order: 1; width: 100%; }
+            .service-visual-wrapper { order: 2; width: 100%; }
+            /* Mobile Button is duplicated in JSX, handled there */
 
-           .service-details-wrapper h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-           .service-details-wrapper p { 
-             margin: 0 0 1rem 0; 
-             font-size: 0.8rem; 
-             line-height: 1.4; 
-             font-weight: 300; /* Match list items */
-             color: rgba(255, 255, 255, 0.4); /* Match list items */
-           }
-           
-           /* Show 3 points instead of 2 */
-           .service-features-services li:nth-child(n+4) {
-             display: none;
-           }
-           
-           .service-features-services { text-align: left; display: inline-block; font-size: 0.8rem; margin-bottom: 1rem; }
-           
-           /* Gap Reduction */
-           .section-header-container {
-             margin-bottom: 20px; /* Reduced from 40px */
-           }
-           
-           .service-feature-item-services { margin-bottom: 4px; padding-left: 16px; }
+            .service-details-wrapper h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+            .service-details-wrapper p { 
+              margin: 0 0 1rem 0; 
+              font-size: 0.8rem; 
+              line-height: 1.4; 
+              font-weight: 300; /* Match list items */
+              color: rgba(255, 255, 255, 0.4); /* Match list items */
+            }
+            
+            /* Show 3 points instead of 2 */
+            .service-features-services li:nth-child(n+4) {
+              display: none;
+            }
+            
+            .service-features-services { text-align: left; display: block; width: 100%; font-size: 0.8rem; margin-bottom: 1rem; }
+            
+            /* Gap Reduction */
+            .section-header-container {
+              margin-bottom: 20px; /* Reduced from 40px */
+            }
+            
+            .service-feature-item-services { margin-bottom: 4px; padding-left: 16px; }
            .service-link-services { margin: 0; }
            
            /* Reset specific reverse alignments for mobile */
@@ -719,9 +723,17 @@ const Services = () => {
                     </ul>
                     {/* Main Button - Visible on Mobile (under text) and Desktop */}
                     <button
-                      className="service-link-services w-auto lg:w-auto justify-center lg:justify-start mt-4 lg:mt-0"
+                      className="service-link-services relative overflow-hidden w-auto lg:w-auto justify-center lg:justify-start mt-4 lg:mt-0"
                       onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
                     >
+                      {/* Top Border Shine */}
+                      <div
+                        className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px]"
+                        style={{
+                          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6) 50%, transparent)',
+                          boxShadow: '0 0 10px rgba(255, 255, 255, 0.4)'
+                        }}
+                      />
                       Explore {service.title.split(' ')[0]} Services
                     </button>
                   </div>

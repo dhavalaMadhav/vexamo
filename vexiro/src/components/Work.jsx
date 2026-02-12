@@ -37,6 +37,8 @@ const projects = [
 
 
 const ProjectCard = ({ project }) => {
+    const [isGearHovered, setIsGearHovered] = useState(false);
+
     return (
         <div className="relative w-full md:w-[340px] h-[320px] flex-shrink-0 group/card">
 
@@ -74,6 +76,15 @@ const ProjectCard = ({ project }) => {
                     style={{ background: `radial-gradient(circle at bottom, ${project.color}, transparent 70%)` }}
                 />
 
+                {/* Top Border Shine */}
+                <div
+                    className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px]"
+                    style={{
+                        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6) 50%, transparent)',
+                        boxShadow: '0 0 10px rgba(255, 255, 255, 0.4)'
+                    }}
+                />
+
                 <div className="flex flex-col h-full relative z-10">
                     {/* Category Tag */}
                     <div className="mb-6">
@@ -101,13 +112,38 @@ const ProjectCard = ({ project }) => {
                             <span className="text-white/20 text-[9px] font-medium tracking-[0.1em]">
                                 LIVE PROJECT
                             </span>
+
+                            {/* Static Curved Arrow Pointing to Gear */}
+                            <div className={`absolute right-[45px] -bottom-6 w-12 h-12 pointer-events-none rotate-[-60deg] transition-opacity duration-300 ${isGearHovered ? 'opacity-0' : 'opacity-50'}`}>
+                                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-lg">
+                                    <path
+                                        d="M12 12 C 24 12, 32 18, 36 34"
+                                        stroke="white"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        fill="none"
+                                    />
+                                    <path
+                                        d="M26 30 L 36 34 L 40 24"
+                                        stroke="white"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        fill="none"
+                                    />
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* The "Noida" Button placed in the cutout void - Gear Shape */}
-            <div className="absolute bottom-0 right-0 w-[56px] h-[56px] flex items-center justify-center pointer-events-auto z-30">
+            <div
+                className="absolute bottom-0 right-0 w-[56px] h-[56px] flex items-center justify-center pointer-events-auto z-30"
+                onMouseEnter={() => setIsGearHovered(true)}
+                onMouseLeave={() => setIsGearHovered(false)}
+            >
                 <a
                     href={project.link}
                     target="_blank"
@@ -146,7 +182,7 @@ const LogoPill = ({ title, desc, color, logo, index, isActive, onClick }) => {
             style={{
                 background: `linear-gradient(90deg, ${color}33 0%, ${color}11 100%)`,
                 border: '1px solid rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(15px)',
+                backdropFilter: 'blur(2px)',
                 zIndex: 100 - index
             }}
         >
@@ -204,7 +240,7 @@ const WorkSection = () => {
 
 
             {/* Static Grid of Cards */}
-            <div className="relative z-20 flex flex-wrap justify-center lg:justify-start gap-10 px-8 md:px-16 max-w-7xl w-full mb-16">
+            <div className="relative z-20 flex flex-wrap justify-center lg:justify-center gap-10 px-8 md:px-16 max-w-7xl w-full mb-16">
                 {projects.map((project, idx) => (
                     <motion.div
                         key={idx}

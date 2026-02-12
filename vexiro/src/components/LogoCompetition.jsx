@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 // --- Countdown Utility ---
 const calculateTimeLeft = () => {
@@ -63,6 +64,29 @@ const LogoCompetition = () => {
         <div className="relative w-full min-h-screen bg-transparent text-white overflow-x-hidden font-sans selection:bg-[#8a3dff]/30 selection:text-white pt-24 px-6 flex flex-col">
 
             {/* Background Atmosphere handled by App.js global background */}
+
+            {/* Back Button */}
+            <Link
+                to="/"
+                className="hidden md:block absolute top-6 left-6 md:top-10 md:right-10 md:left-auto z-50 group"
+            >
+                <button
+                    className="relative overflow-hidden px-6 py-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full text-white font-medium text-xs tracking-widest uppercase transition-all duration-300 group-hover:bg-white/10 flex items-center gap-2"
+                >
+                    {/* Top Border Shine */}
+                    <div
+                        className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px]"
+                        style={{
+                            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6) 50%, transparent)',
+                            boxShadow: '0 0 10px rgba(255, 255, 255, 0.4)'
+                        }}
+                    />
+                    <svg className="w-4 h-4 text-white transition-transform duration-300 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Back to Home
+                </button>
+            </Link>
 
             <div className="container mx-auto max-w-7xl relative z-10 flex-grow flex flex-col">
 

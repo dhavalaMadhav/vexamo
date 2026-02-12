@@ -43,7 +43,7 @@ function App() {
     <div className="App selection:bg-white/10 selection:text-white relative">
       <BackgroundSystem />
       {!isLogoCompetition && <SectionNav />}
-      <MobileNav showLinks={!isLogoCompetition} />
+      <MobileNav showLinks={!isLogoCompetition} isLogoCompetition={isLogoCompetition} />
       <div className="relative z-10">
         <Routes>
           <Route path="/" element={
@@ -71,7 +71,7 @@ function App() {
           I will hide the old one on mobile (lg:flex, hidden on smaller).
       */}
       <div
-        className={`fixed bottom-10 right-10 z-50 transition-all duration-500 transform hidden lg:block`} // Added hidden lg:block
+        className={`fixed bottom-10 right-10 z-50 transition-all duration-500 transform hidden md:block`} // Added hidden md:block
       >
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} // Inline function since state logic removed for simplicity in snippet match

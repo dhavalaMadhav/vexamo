@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const sections = [
     { id: 'home', name: 'Home' },
@@ -9,7 +10,7 @@ const sections = [
     { id: 'contact', name: 'Contact' }
 ];
 
-const MobileNav = ({ showLinks = true }) => {
+const MobileNav = ({ showLinks = true, isLogoCompetition = false }) => {
     const [activeSection, setActiveSection] = useState('home');
     const { scrollY } = useScroll();
     const rotate = useTransform(scrollY, (value) => value / 3);
@@ -31,15 +32,6 @@ const MobileNav = ({ showLinks = true }) => {
                     }
                 }
             }
-
-            // Show Gear Logic? 
-            // User said "gear... is ALSO in that blurred section". 
-            // Usually gear shows after scroll. The nav bar itself: "fixed... at bottom".
-            // Is the nav bar always visible? Or only after scroll?
-            // "background transperent blurred section at the bottom... fixed... vertical line arranged horizontally".
-            // It implies a persistent nav or one that appears. I'll make it always visible or fade in.
-            // Let's make it fade in after Hero like SectionNav for consistency, or just always there.
-            // "just like how they are in desktop". Desktop appears after hero.
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -56,14 +48,14 @@ const MobileNav = ({ showLinks = true }) => {
     };
 
     return (
-        <div className="fixed bottom-0 left-0 w-full h-[80px] z-50 lg:hidden pointer-events-none">
+        <div className="fixed bottom-0 left-0 w-full h-[80px] z-50 md:hidden pointer-events-none">
             {/* Background Blur Container */}
             <div
                 className="absolute inset-0 bg-black/60 backdrop-blur-xl border-t border-white/10 pointer-events-auto flex items-center justify-between px-8"
                 style={{ borderRadius: '50% 50% 0 0 / 24px 24px 0 0' }}
             >
 
-                {/* Left: Navigation Indicators (Horizontal Row of Vertical Lines) */}
+                {/* Left: Navigation Indicators (Horizontal Row of Vertical Lines) OR Back Button */}
                 {showLinks ? (
                     <div className="flex items-center gap-6">
                         {sections.map((section) => (
@@ -81,14 +73,28 @@ const MobileNav = ({ showLinks = true }) => {
                                     }}
                                     className="rounded-full transition-all duration-300"
                                 />
-                                {/* Label (Optional? User didn't ask for text, just lines "inverted"). 
-                            Desktop has text on hover. Mobile hover is tricky. 
-                            I'll keep it clean with just lines as requested, maybe label appears on active?
-                            User said "vertical line arranged horizontally for navigation... like tabs".
-                        */}
                             </div>
                         ))}
                     </div>
+                ) : isLogoCompetition ? (
+                    <Link to="/">
+                        <button
+                            className="relative overflow-hidden px-5 py-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full text-white font-medium text-xs tracking-widest uppercase transition-all duration-300 group hover:bg-white/10 flex items-center gap-2"
+                        >
+                            {/* Top Border Shine */}
+                            <div
+                                className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px]"
+                                style={{
+                                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6) 50%, transparent)',
+                                    boxShadow: '0 0 10px rgba(255, 255, 255, 0.4)'
+                                }}
+                            />
+                            <svg className="w-3 h-3 text-white transition-transform duration-300 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            Back to Home
+                        </button>
+                    </Link>
                 ) : <div />}
 
                 {/* Right: Gear Icon (Scroll to Top) */}

@@ -314,8 +314,16 @@ const Hero = () => {
                 whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,1)", color: "#000" }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-8 py-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full text-white font-medium text-xs tracking-widest uppercase transition-all duration-300 pointer-events-auto"
+                className="relative overflow-hidden px-8 py-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full text-white font-medium text-xs tracking-widest uppercase transition-all duration-300 pointer-events-auto group"
               >
+                {/* Top Border Shine */}
+                <div
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px]"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6) 50%, transparent)',
+                    boxShadow: '0 0 10px rgba(255, 255, 255, 0.4)'
+                  }}
+                />
                 Start Your Project
               </motion.button>
               <motion.button
