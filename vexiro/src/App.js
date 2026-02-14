@@ -6,7 +6,7 @@ import Work from './components/Work';
 import BackgroundSystem from './components/BackgroundSystem';
 import CurvedDivider from './components/CurvedDivider';
 
-import Team from './components/Team';
+// import Team from './components/Team';
 import SectionNav from './components/SectionNav';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -54,7 +54,7 @@ function App() {
                 <CurvedDivider />
               </div>
               <Work />
-              <Team />
+              {/* <Team /> */}
               <Contact />
             </>
           } />

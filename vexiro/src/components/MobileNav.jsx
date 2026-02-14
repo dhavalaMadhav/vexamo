@@ -6,7 +6,7 @@ const sections = [
     { id: 'home', name: 'Home' },
     { id: 'our-services', name: 'Services' },
     { id: 'projects', name: 'Work' }, // "Projects" in id, "Work" in Mobile View maybe? adhering to existing names
-    { id: 'team', name: 'Team' },
+    // { id: 'team', name: 'Team' },
     { id: 'contact', name: 'Contact' }
 ];
 

@@ -31,7 +31,7 @@ const Contact = () => {
 
         {/* Main Header Content - Added as requested */}
         <motion.div
-          className="text-center mb-24 relative z-10"
+          className="text-center mb-8 relative z-10"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -59,78 +59,21 @@ const Contact = () => {
 
 
             {/* Infinity Loop - Dual Overlapping Organic Shapes */}
+            {/* Image Section - Commented out temporarily
             <div className="relative w-full max-w-[700px] aspect-[700/460] drop-shadow-2xl group cursor-pointer">
-              {/* Hover Overlay Text */}
-              <div className="absolute top-[25%] right-[15%] z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                <span
-                  className="text-[10px] font-bold tracking-widest uppercase text-white"
-                  style={{ textShadow: '0px 2px 4px #000000, 0px 4px 8px #000000' }}
-                >
-                  FOUNDER: MADHAV DHAVALA
-                </span>
-              </div>
+               ... (Image code) ...
+            </div>
+            */}
 
-              <svg className="w-full h-full overflow-visible" viewBox="0 0 700 460">
-                <defs>
-                  {/* Drop Shadow Filter for Irregular Shapes */}
-                  <filter id="blob-shadow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feDropShadow dx="0" dy="10" stdDeviation="15" floodColor="rgba(0,0,0,0.9)" />
-                  </filter>
-
-                  {/* Left Shape Path - Modeled after the "blue blob" reference */}
-                  {/* Left Diamond Shape - Increased Size to 320 */}
-                  <rect
-                    id="blob-left"
-                    x="140"
-                    y="70"
-                    width="320"
-                    height="320"
-                    rx="40"
-                    transform="rotate(45 300 230)"
-                  />
-                  {/* Right Diamond Shape - Increased Size to 320 */}
-                  <rect
-                    id="blob-right"
-                    x="240"
-                    y="70"
-                    width="320"
-                    height="320"
-                    rx="40"
-                    transform="rotate(45 400 230)"
-                  />
-
-                  <mask id="mask-left">
-                    <use href="#blob-left" fill="white" />
-                  </mask>
-                  <mask id="mask-right">
-                    <use href="#blob-right" fill="white" />
-                  </mask>
-                </defs>
-
-                {/* Left Shape Layer */}
-                <g filter="url(#blob-shadow)">
-                  <image
-                    href="/us.image.jpeg"
-                    width="700"
-                    height="460"
-                    preserveAspectRatio="xMidYMid slice"
-                    mask="url(#mask-left)"
-                  />
-                  <use href="#blob-left" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                </g>
-
-                {/* Right Shape Layer (Overlapping) */}
-                <g filter="url(#blob-shadow)">
-                  <image
-                    href="/us.image.jpeg"
-                    width="700"
-                    height="460"
-                    preserveAspectRatio="xMidYMid slice"
-                    mask="url(#mask-right)"
-                  />
-                  <use href="#blob-right" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                </g>
-              </svg>
+            {/* Text Replacement */}
+            <div className="hidden lg:flex flex-col items-center justify-center text-center space-y-8 max-w-lg mx-auto">
+              <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tighter uppercase">
+                Wanna <span className="text-[#8a3dff]">Connect?</span>
+              </h3>
+              <p className="text-white/60 text-lg leading-relaxed font-light">
+                We are a team of passionate designers and developers dedicated to crafting exceptional digital experiences. Whether you have a project in mind or just want to say hi, we'd love to hear from you.
+              </p>
+              <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
             </div>
           </div>
 
