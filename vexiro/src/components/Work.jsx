@@ -13,21 +13,32 @@ const projects = [
         category: 'UNIVERSITY ADMISSION PORTAL',
         description: 'A visually rich university admission portal crafted with custom design and smooth interactions.',
         color: '#FF7A3D', // Brown/Orange
-        link: 'https://www.unipick.org/'
+        link: 'https://www.unipick.org/',
+        domain: 'unipick.org'
     },
     {
         name: 'Swaminarayan University',
         category: 'ADMISSION PORTAL',
         description: 'Comprehensive educational platform for student enrollment and academic management.',
         color: '#8A3DFF', // Violet
-        link: 'https://swaminarayan-foundation.onrender.com/'
+        link: 'https://swaminarayan-foundation.onrender.com/',
+        domain: 'swaminarayan.com'
     },
     {
         name: 'Swarrnim University',
         category: 'ADMISSION PORTAL',
         description: 'A modern e-commerce style platform for university admissions with secure admin panel.',
         color: '#409EFF', // Blue
-        link: 'https://swarrnim.vercel.app/'
+        link: 'https://swarrnim.vercel.app/',
+        domain: 'swarnim.com'
+    },
+    {
+        name: 'CA Ramesh Y',
+        category: 'PORTFOLIO',
+        description: 'A modern portfolio website showcasing creative work and professional experience.',
+        color: '#2ECC71', // Green
+        link: 'https://www.carameshy.com/',
+        domain: 'carameshy.com'
     }
 ];
 
@@ -37,8 +48,6 @@ const projects = [
 
 
 const ProjectCard = ({ project }) => {
-    const [isGearHovered, setIsGearHovered] = useState(false);
-
     return (
         <div className="relative w-full md:w-[340px] h-[320px] flex-shrink-0 group/card">
 
@@ -48,8 +57,6 @@ const ProjectCard = ({ project }) => {
                 style={{
                     // Cutout mask concentric with the 56px button (radius 28px).
                     // Button center is at (28px, 28px) from bottom-right.
-                    // To be concentric with a gap, the hole radius needs to be larger than 28px (e.g., 34px).
-                    // Mask center: calc(100% - 28px) calc(100% - 28px)
                     maskImage: 'radial-gradient(circle at calc(100% - 28px) calc(100% - 28px), transparent 34px, black 35px)',
                     WebkitMaskImage: 'radial-gradient(circle at calc(100% - 28px) calc(100% - 28px), transparent 34px, black 35px)',
                 }}
@@ -57,15 +64,14 @@ const ProjectCard = ({ project }) => {
                 {/* SVG Border for Cutout - Positioned exactly on the hole */}
                 <div className="absolute right-[28px] bottom-[28px] translate-x-1/2 translate-y-1/2 w-[68px] h-[68px] z-20 pointer-events-none">
                     <svg width="68" height="68" viewBox="0 0 68 68" className="w-full h-full rotate-[-90deg]">
-                        {/* Border Circle - radius 34px (matching mask hole) */}
                         <circle
                             cx="34"
                             cy="34"
-                            r="33.5" // Slightly inset to sit on edge
+                            r="33.5"
                             fill="none"
                             stroke="rgba(255,255,255,0.1)"
                             strokeWidth="1"
-                            strokeDasharray="53 200" // Only show arc on the card side, not closing the button side
+                            strokeDasharray="53 200"
                             strokeDashoffset="-25"
                         />
                     </svg>
@@ -94,65 +100,41 @@ const ProjectCard = ({ project }) => {
                     </div>
 
                     {/* Project Title */}
-                    <h4 className="text-[1.5rem] md:text-[2rem] font-bold mb-4 tracking-tighter uppercase text-white">
+                    <h4 className="text-[1.5rem] md:text-[2rem] font-bold mb-4 tracking-tighter uppercase text-white leading-tight">
                         {project.name}
                     </h4>
 
                     {/* Project Description */}
-                    <p className="text-white/40 text-xs leading-relaxed mb-8 font-light">
+                    <p className="text-white/40 text-xs leading-relaxed mb-8 font-light line-clamp-3">
                         {project.description}
                     </p>
 
-                    {/* Footer Section (Modified for Cutout) */}
+                    {/* Footer Section */}
                     <div className="mt-auto pt-6 border-t border-white/[0.05] flex items-center justify-between pr-24">
-                        <div className="flex items-center gap-2">
-                            <div className="w-4 h-4 border border-white/20 rounded-full flex items-center justify-center">
-                                <div className="w-1 h-1 border-t border-r border-white/40 rotate-[135deg]" />
+                        <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 group/link cursor-pointer"
+                        >
+                            <div className="w-6 h-6 border border-white/20 group-hover/link:border-white/50 rounded-full flex items-center justify-center transition-colors">
+                                {/* Top right arrow */}
+                                <div className="w-1.5 h-1.5 border-t border-r border-white/40 group-hover/link:border-white/80 rotate-45 transition-colors origin-center translate-y-[1px] -translate-x-[1px]" />
                             </div>
-                            <span className="text-white/20 text-[9px] font-medium tracking-[0.1em]">
-                                LIVE PROJECT
+                            <span className="text-white/30 group-hover/link:text-white/90 text-[10px] font-bold tracking-[0.1em] transition-colors uppercase">
+                                {project.domain}
                             </span>
-
-                            {/* Static Curved Arrow Pointing to Gear */}
-                            <div className={`absolute right-[45px] -bottom-6 w-12 h-12 pointer-events-none rotate-[-60deg] transition-opacity duration-300 ${isGearHovered ? 'opacity-0' : 'opacity-50'}`}>
-                                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-lg">
-                                    <path
-                                        d="M12 12 C 24 12, 32 18, 36 34"
-                                        stroke="white"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        fill="none"
-                                    />
-                                    <path
-                                        d="M26 30 L 36 34 L 40 24"
-                                        stroke="white"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        fill="none"
-                                    />
-                                </svg>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
 
-            {/* The "Noida" Button placed in the cutout void - Gear Shape */}
-            <div
-                className="absolute bottom-0 right-0 w-[56px] h-[56px] flex items-center justify-center pointer-events-auto z-30"
-                onMouseEnter={() => setIsGearHovered(true)}
-                onMouseLeave={() => setIsGearHovered(false)}
-            >
-                <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative w-12 h-12 flex items-center justify-center group/btn"
-                >
-                    {/* Gear Shape SVG with Rotation */}
+            {/* The Gear Shape placed in the bottom right corner (static) */}
+            <div className="absolute bottom-0 right-0 w-[56px] h-[56px] flex items-center justify-center pointer-events-none z-30">
+                <div className="relative w-12 h-12 flex items-center justify-center">
+                    {/* Gear Shape SVG with Rotation (spinning) */}
                     <svg
-                        className="w-10 h-10 text-white/50 animate-[spin_4s_linear_infinite] group-hover/btn:[animation-play-state:paused] transition-all duration-300 group-hover/btn:text-white"
+                        className="w-10 h-10 text-white/50 animate-[spin_4s_linear_infinite]"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -161,18 +143,11 @@ const ProjectCard = ({ project }) => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-
-                    {/* Tooltip Text - Appearing on Hover */}
-                    <div className="absolute right-full mr-3 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
-                        <span className="text-white text-[10px] uppercase tracking-widest font-bold">Visit Site</span>
-                    </div>
-                </a>
+                </div>
             </div>
-
-        </div >
+        </div>
     );
 };
-
 const LogoPill = ({ title, desc, color, logo, index, isActive, onClick }) => {
     return (
         <div
@@ -239,7 +214,7 @@ const WorkSection = () => {
 
 
             {/* Static Grid of Cards */}
-            <div className="relative z-20 flex flex-wrap justify-center lg:justify-center gap-10 px-8 md:px-16 max-w-7xl w-full mb-16">
+            <div className="relative z-20 flex flex-wrap justify-start gap-10 px-8 md:px-16 max-w-7xl w-full mb-16">
                 {projects.map((project, idx) => (
                     <motion.div
                         key={idx}
