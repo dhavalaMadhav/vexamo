@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VIXORA — True Hole Reveal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0f;
+      --fg:#ffffff;
+      --accent:#ffffff;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html,body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--fg);}
+
+    .services-wrapper{height:300vh;}
+
+    .services{
+      position:sticky;
+      top:0;
+      height:100vh;
+      overflow:hidden;
+      background:#000000;
+    }
+
+    h2{
+      position:absolute;
+      top:32px;
+      width:100%;
+      text-align:center;
+      font-size:clamp(48px, 8vw, 110px);
+      font-weight:900;
+      letter-spacing:0.02em;
+      line-height:1;
+      z-index:50;
+      pointer-events:none;
+    }
+
+    .section-title{
+      display:inline-flex;
+      align-items:baseline;
+      gap:0.2em;
+    }
+
+    .section-title .primary{color:#ffffff;}
+    .section-title .secondary{
+      color: var(--accent);
+      font-weight:900;
+    }
+
+    .stage{position:relative;width:100%;height:100%;overflow:hidden;}
+
+    .base-layer,
+    .reveal-layer{
+      position:absolute;
+      inset:0;
+      background:#000000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .base-layer{z-index:1;}
+    .reveal-layer{
+      z-index:2;
+      clip-path:circle(0px at center);
+      will-change: clip-path;
+    }
+
+    .center-glow {
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:1200px;
+      height:1200px;
+      transform:translate(-50%, -50%);
+      border-radius:50%;
+      filter:blur(120px);
+      opacity:0.6;
+      pointer-events:none;
+      z-index:0;
+    }
+    .glow-web-dev {
+      background:radial-gradient(circle, rgba(255,122,61,0.8) 0%, rgba(255,122,61,0) 70%);
+    }
+    .glow-logo-design {
+      background:radial-gradient(circle, rgba(138,61,255,0.8) 0%, rgba(138,61,255,0) 70%);
+    }
+    .glow-video-edit {
+      background:radial-gradient(circle, rgba(64,158,255,0.8) 0%, rgba(64,158,255,0) 70%);
+    }
+
+    .service-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      margin-top: 120px;
+      position:relative;
+      z-index:1;
+    }
+
+    .service-content {
+      width: 90%;
+      max-width: 1400px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 80px;
+    }
+
+    .service-visual {
+      flex: 1;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+    }
+
+    .service-details {
+      flex: 1;
+      padding: 40px 0;
+    }
+
+    .service-details h3 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1.1;
+      color: #ffffff;
+    }
+
+    .service-details p {
+      color: #7a7f89;
+      line-height: 1.7;
+      margin-bottom: 32px;
+      font-size: 18px;
+    }
+
+    .service-features {
+      list-style: none;
+      margin-bottom: 40px;
+    }
+
+    .service-features li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      color: #7a7f89;
+      font-size: 16px;
+      position: relative;
+      padding-left: 30px;
+    }
+
+    /* Hide features beyond index 1 (first 2) on mobile */
+    .service-features li.hide-mobile {
+      display: flex;
+    }
+
+    .service-features li::before {
+      content: "";
+      position:absolute;
+      left:0;
+      top:50%;
+      transform:translateY(-50%) rotate(45deg);
+      width:10px;
+      height:16px;
+      border-right:2.5px solid var(--accent);
+      border-bottom:2.5px solid var(--accent);
+      border-radius:1px;
+    }
+
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      font-size: 16px;
+    }
+
+    .service-link::after {
+      content: "→";
+      margin-left: 8px;
+      font-size: 20px;
+    }
+
+    .circles-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .circle-3d {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.6;
+      animation: float 15s infinite ease-in-out;
+    }
+
+    .circle-1 {width: 300px;height: 300px;top: 10%;left: 10%;animation-delay: 0s;}
+    .circle-2 {width: 400px;height: 400px;bottom: 10%;right: 10%;animation-delay: 2s;}
+    .circle-3 {width: 250px;height: 250px;top: 40%;right: 20%;animation-delay: 4s;}
+    .circle-4 {width: 200px;height: 200px;bottom: 30%;left: 20%;animation-delay: 6s;}
+
+    .web-dev .circle-1 {background: radial-gradient(circle, #ff7a3d 0%, rgba(255, 122, 61, 0) 70%);}
+    .web-dev .circle-2 {background: radial-gradient(circle, #3d7aff 0%, rgba(61, 122, 255, 0) 70%);}
+    .web-dev .circle-3 {background: radial-gradient(circle, var(--accent) 0%, rgba(61, 255, 214, 0) 70%);}
+    .web-dev .circle-4 {background: radial-gradient(circle, #ff7a3d 0%, rgba(255, 122, 61, 0) 70%);}
+
+    .logo-design .circle-1 {background: radial-gradient(circle, #ff7a3d 0%, rgba(255, 122, 61, 0) 70%);}
+    .logo-design .circle-2 {background: radial-gradient(circle, #8a3dff 0%, rgba(138, 61, 255, 0) 70%);}
+    .logo-design .circle-3 {background: radial-gradient(circle, #3d7aff 0%, rgba(61, 122, 255, 0) 70%);}
+    .logo-design .circle-4 {background: radial-gradient(circle, var(--accent) 0%, rgba(61, 255, 214, 0) 70%);}
+
+    .video-edit .circle-1 {background: radial-gradient(circle, #8a3dff 0%, rgba(138, 61, 255, 0) 70%);}
+    .video-edit .circle-2 {background: radial-gradient(circle, #3d7aff 0%, rgba(61, 122, 255, 0) 70%);}
+    .video-edit .circle-3 {background: radial-gradient(circle, var(--accent) 0%, rgba(61, 255, 214, 0) 70%);}
+    .video-edit .circle-4 {background: radial-gradient(circle, #ff7a3d 0%, rgba(255, 122, 61, 0) 70%);}
+
+    @keyframes float {
+      0%, 100% {transform: translateY(0) scale(1);}
+      50% {transform: translateY(-30px) scale(1.05);}
+    }
+
+    /* TRUE GLASS EFFECT */
+    .visual-container {
+      width: 90%;
+      max-width: 550px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 32px;
+      overflow: hidden;
+      position: relative;
+      z-index: 10;
+      box-shadow: 
+        0 8px 32px 0 rgba(0, 0, 0, 0.37),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .visual-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, 
+        transparent,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent
+      );
+    }
+
+    .visual-container::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.06),
+        transparent 40%
+      );
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .visual-container:hover::after {
+      opacity: 1;
+    }
+
+    .video-editor-container {
+      width: 100%;
+      height: 450px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+    }
+
+    .video-preview {
+      flex: 1;
+      background: rgba(10, 10, 20, 0.9);
+      border-radius: 12px 12px 0 0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-preview-screen {
+      width: 90%;
+      height: 80%;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-waveform {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: flex-end;
+      padding: 0 10px;
+    }
+
+    .waveform-bar {
+      flex: 1;
+      margin: 0 1px;
+      background: linear-gradient(to top, #409eff, #8a3dff);
+      height: 20px;
+      animation: waveform 1.5s infinite ease-in-out;
+      animation-delay: calc(var(--i) * 0.1s);
+    }
+
+    @keyframes waveform {
+      0%, 100% { height: 20px; }
+      50% { height: 40px; }
+    }
+
+    .video-timeline {
+      height: 80px;
+      background: rgba(30, 30, 40, 0.8);
+      border-radius: 0 0 12px 12px;
+      padding: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .timeline-track {
+      height: 100%;
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .timeline-progress {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 45%;
+      background: linear-gradient(90deg, rgba(64, 158, 255, 0.4), rgba(138, 61, 255, 0.2));
+      border-right: 2px solid #409eff;
+    }
+
+    .timeline-clips {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      padding: 10px;
+      gap: 10px;
+    }
+
+    .timeline-clip {
+      height: 100%;
+      border-radius: 4px;
+      flex: 1;
+      background: rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .timeline-clip::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
+      animation: shine 3s infinite linear;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .video-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px 20px;
+      border-radius: 999px;
+      backdrop-filter: blur(10px);
+    }
+
+    .control-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(15, 15, 25, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      color: var(--accent);
+    }
+
+    .control-btn::before,
+    .control-btn::after{
+      content:"";
+      position:absolute;
+    }
+
+    .control-btn.skip-back::before{
+      width:3px;
+      height:14px;
+      background:var(--accent);
+      left:12px;
+      top:50%;
+      transform:translateY(-50%);
+      border-radius:2px;
+    }
+    .control-btn.skip-back::after{
+      border-style:solid;
+      border-width:7px 8px 7px 0;
+      border-color:transparent var(--accent) transparent transparent;
+      right:10px;
+      top:50%;
+      transform:translateY(-50%);
+    }
+
+    .control-btn.rewind::before{
+      border-style:solid;
+      border-width:7px 8px 7px 0;
+      border-color:transparent var(--accent) transparent transparent;
+      left:10px;
+      top:50%;
+      transform:translateY(-50%);
+    }
+    .control-btn.rewind::after{
+      border-style:solid;
+      border-width:7px 8px 7px 0;
+      border-color:transparent var(--accent) transparent transparent;
+      right:10px;
+      top:50%;
+      transform:translateY(-50%);
+    }
+
+    .control-btn.play::before{
+      border-style:solid;
+      border-width:8px 0 8px 14px;
+      border-color:transparent transparent transparent var(--accent);
+      left:50%;
+      top:50%;
+      transform:translate(-40%,-50%);
+    }
+
+    .control-btn.forward::before{
+      border-style:solid;
+      border-width:7px 0 7px 8px;
+      border-color:transparent transparent transparent var(--accent);
+      left:10px;
+      top:50%;
+      transform:translateY(-50%);
+    }
+    .control-btn.forward::after{
+      border-style:solid;
+      border-width:7px 0 7px 8px;
+      border-color:transparent transparent transparent var(--accent);
+      right:10px;
+      top:50%;
+      transform:translateY(-50%);
+    }
+
+    .control-btn.skip-forward::before{
+      border-style:solid;
+      border-width:7px 0 7px 8px;
+      border-color:transparent transparent transparent var(--accent);
+      left:10px;
+      top:50%;
+      transform:translateY(-50%);
+    }
+    .control-btn.skip-forward::after{
+      width:3px;
+      height:14px;
+      background:var(--accent);
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      border-radius:2px;
+    }
+
+    .code-window-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 8px;
+      margin-right: 20px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot.red {background: #ff5f56;}
+    .dot.yellow {background: #ffbd2e;}
+    .dot.green {background: #27ca3f;}
+
+    .window-title {
+      color: #7a7f89;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .code-content {
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 16px;
+      color: #a1a1b3;
+      line-height: 1.6;
+    }
+
+    .code-line {margin-bottom: 8px;}
+    .code-comment {color: #5a5a7a;}
+    .code-tag {color: #ff7a3d;}
+    .code-attr {color: #8a3dff;}
+    .code-value {color: var(--accent);}
+
+    .logo-design-visual {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      height: 100%;
+      gap: 20px;
+    }
+
+    .vixora-logo {
+      width: 180px;
+      height: 180px;
+      background: linear-gradient(135deg, rgba(255, 122, 61, 0.1), rgba(138, 61, 255, 0.1));
+      border-radius: 20px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .vixora-logo::before {
+      content: 'VIXORA';
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, #ff7a3d 0%, #8a3dff 50%, #3d7aff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-align: center;
+    }
+
+    .logo-info {
+      color: #a1a1b3;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .logo-info h4 {
+      color: #ffffff;
+      font-size: 18px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    
+    /* Tablet: 1024px and below */
+    @media (max-width: 1024px) {
+      .service-container {
+        margin-top: 140px;
+        padding: 30px 20px;
+      }
+      
+      .service-content {
+        flex-direction: column;
+        gap: 40px;
+      }
+      
+      .service-visual {
+        height: 400px;
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .service-details h3 {
+        font-size: 42px;
+      }
+      
+      .service-details p {
+        font-size: 17px;
+      }
+      
+      .service-features li {
+        font-size: 15px;
+      }
+      
+      .visual-container {
+        padding: 28px;
+        max-width: 500px;
+      }
+      
+      .video-editor-container {
+        height: 400px;
+      }
+      
+      .vixora-logo {
+        width: 140px;
+        height: 140px;
+      }
+      
+      .vixora-logo::before {
+        font-size: 28px;
+      }
+      
+      .center-glow {
+        width: 900px;
+        height: 900px;
+      }
+      
+      .code-content {
+        font-size: 15px;
+      }
+      
+      .control-btn {
+        width: 36px;
+        height: 36px;
+      }
+      
+      .video-controls {
+        gap: 12px;
+        padding: 8px 16px;
+      }
+    }
+    
+    /* Mobile: 768px and below */
+    @media (max-width: 768px) {
+      h2 {
+        font-size: clamp(32px, 9vw, 48px);
+        top: 20px;
+      }
+      
+      .service-container {
+        margin-top: 100px;
+        padding: 20px 16px;
+      }
+      
+      .service-content {
+        width: 100%;
+        gap: 30px;
+      }
+      
+      .service-visual {
+        height: 320px;
+      }
+      
+      .service-details {
+        padding: 20px 0;
+      }
+      
+      .service-details h3 {
+        font-size: 28px;
+        margin-bottom: 16px;
+      }
+      
+      .service-details p {
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+      
+      .service-features {
+        margin-bottom: 28px;
+      }
+      
+      .service-features li {
+        font-size: 14px;
+        margin-bottom: 12px;
+        padding-left: 26px;
+      }
+      
+      /* Hide features beyond first 2 on mobile */
+      .service-features li.hide-mobile {
+        display: none;
+      }
+      
+      .service-features li::before {
+        width: 8px;
+        height: 14px;
+        border-right-width: 2px;
+        border-bottom-width: 2px;
+      }
+      
+      .service-link {
+        font-size: 14px;
+      }
+      
+      .visual-container {
+        padding: 20px;
+        max-width: 100%;
+        border-radius: 20px;
+      }
+      
+      .video-editor-container {
+        height: 320px;
+      }
+      
+      .video-preview-screen {
+        width: 95%;
+        height: 75%;
+      }
+      
+      .video-timeline {
+        height: 60px;
+        padding: 10px;
+      }
+      
+      .video-waveform {
+        height: 30px;
+        padding: 0 6px;
+      }
+      
+      .waveform-bar {
+        margin: 0 0.5px;
+      }
+      
+      .video-controls {
+        gap: 10px;
+        padding: 6px 14px;
+        bottom: 15px;
+      }
+      
+      .control-btn {
+        width: 32px;
+        height: 32px;
+      }
+      
+      .control-btn.skip-back::before,
+      .control-btn.skip-forward::after {
+        width: 2.5px;
+        height: 12px;
+      }
+      
+      .control-btn.skip-back::after,
+      .control-btn.skip-forward::before,
+      .control-btn.rewind::before,
+      .control-btn.rewind::after,
+      .control-btn.forward::before,
+      .control-btn.forward::after {
+        border-width: 6px 7px 6px 0;
+      }
+      
+      .control-btn.forward::before,
+      .control-btn.forward::after,
+      .control-btn.skip-forward::before {
+        border-width: 6px 0 6px 7px;
+      }
+      
+      .control-btn.play::before {
+        border-width: 7px 0 7px 12px;
+      }
+      
+      .vixora-logo {
+        width: 100px;
+        height: 100px;
+        border-radius: 16px;
+        padding: 16px;
+      }
+      
+      .vixora-logo::before {
+        font-size: 20px;
+        letter-spacing: 0.08em;
+      }
+      
+      .logo-design-visual {
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .logo-info {
+        font-size: 13px;
+        text-align: center;
+      }
+      
+      .logo-info h4 {
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+      
+      .code-window-header {
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+      }
+      
+      .window-dots {
+        gap: 6px;
+        margin-right: 14px;
+      }
+      
+      .dot {
+        width: 10px;
+        height: 10px;
+      }
+      
+      .window-title {
+        font-size: 12px;
+      }
+      
+      .code-content {
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      
+      .code-line {
+        margin-bottom: 6px;
+      }
+      
+      .center-glow {
+        width: 600px;
+        height: 600px;
+        filter: blur(100px);
+      }
+      
+      .circle-3d {
+        filter: blur(40px);
+      }
+      
+      .circle-1 {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .circle-2 {
+        width: 280px;
+        height: 280px;
+      }
+      
+      .circle-3 {
+        width: 180px;
+        height: 180px;
+      }
+      
+      .circle-4 {
+        width: 150px;
+        height: 150px;
+      }
+    }
+    
+    /* Small Mobile: 480px and below */
+    @media (max-width: 480px) {
+      h2 {
+        font-size: clamp(28px, 10vw, 36px);
+        top: 16px;
+      }
+      
+      .service-container {
+        margin-top: 80px;
+        padding: 16px 12px;
+      }
+      
+      .service-content {
+        gap: 24px;
+      }
+      
+      .service-visual {
+        height: 280px;
+      }
+      
+      .service-details h3 {
+        font-size: 24px;
+        margin-bottom: 12px;
+      }
+      
+      .service-details p {
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+      
+      .service-features {
+        margin-bottom: 24px;
+      }
+      
+      .service-features li {
+        font-size: 13px;
+        margin-bottom: 10px;
+        padding-left: 24px;
+      }
+      
+      .service-link {
+        font-size: 13px;
+      }
+      
+      .visual-container {
+        padding: 16px;
+        border-radius: 16px;
+      }
+      
+      .video-editor-container {
+        height: 280px;
+      }
+      
+      .video-timeline {
+        height: 50px;
+        padding: 8px;
+      }
+      
+      .video-waveform {
+        height: 25px;
+      }
+      
+      .video-controls {
+        gap: 8px;
+        padding: 5px 12px;
+        bottom: 12px;
+      }
+      
+      .control-btn {
+        width: 28px;
+        height: 28px;
+      }
+      
+      .vixora-logo {
+        width: 90px;
+        height: 90px;
+        padding: 14px;
+      }
+      
+      .vixora-logo::before {
+        font-size: 18px;
+      }
+      
+      .logo-info h4 {
+        font-size: 15px;
+      }
+      
+      .logo-info {
+        font-size: 12px;
+      }
+      
+      .code-content {
+        font-size: 12px;
+      }
+      
+      .window-title {
+        font-size: 11px;
+      }
+      
+      .center-glow {
+        width: 500px;
+        height: 500px;
+        filter: blur(80px);
+      }
+      
+      .circle-1 {
+        width: 150px;
+        height: 150px;
+      }
+      
+      .circle-2 {
+        width: 220px;
+        height: 220px;
+      }
+      
+      .circle-3 {
+        width: 140px;
+        height: 140px;
+      }
+      
+      .circle-4 {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="services-wrapper">
+  <section class="services">
+    <h2>
+      <span class="section-title">
+        <span class="primary">OUR</span>
+        <span class="secondary">SERVICES</span>
+      </span>
+    </h2>
+    <div class="stage">
+      <div class="base-layer" id="base"></div>
+      <div class="reveal-layer" id="reveal"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const services = [
+    {
+      title: 'Website Development',
+      desc: 'High-performance, scalable, modern websites engineered for real-world businesses.',
+      type: 'web-dev',
+      glowClass: 'glow-web-dev',
+      features: [
+        'Custom responsive web applications',
+        'E-commerce solutions with seamless checkout',
+        'CMS integration and content strategy',
+        'Performance optimization and SEO',
+        'Ongoing maintenance and support'
+      ]
+    },
+    {
+      title: 'Logo & Brand Identity',
+      desc: 'Minimal, memorable brand identities crafted with precision and strategy.',
+      type: 'logo-design',
+      glowClass: 'glow-logo-design',
+      features: [
+        'Strategic brand discovery and positioning',
+        'Logo design with conceptual depth',
+        'Complete visual identity systems',
+        'Brand guidelines and implementation',
+        'Adaptive logos for various applications'
+      ]
+    },
+    {
+      title: 'Video Editing & Motion',
+      desc: 'Cinematic edits and motion visuals designed to capture attention instantly.',
+      type: 'video-edit',
+      glowClass: 'glow-video-edit',
+      features: [
+        'Commercial and promotional video editing',
+        '2D/3D motion graphics and animation',
+        'Social media video content creation',
+        'Color grading and visual effects',
+        'Sound design and audio enhancement'
+      ]
+    }
+  ];
+
+  const wrapper = document.querySelector('.services-wrapper');
+  const base = document.getElementById('base');
+  const reveal = document.getElementById('reveal');
+
+  function getServiceHTML(service) {
+    let visualContent = '';
+    
+    if (service.type === 'web-dev') {
+      visualContent = `
+        <div class="circles-container ${service.type}">
+          <div class="circle-3d circle-1"></div>
+          <div class="circle-3d circle-2"></div>
+          <div class="circle-3d circle-3"></div>
+          <div class="circle-3d circle-4"></div>
+        </div>
+        <div class="visual-container">
+          <div class="code-window-header">
+            <div class="window-dots">
+              <div class="dot red"></div>
+              <div class="dot yellow"></div>
+              <div class="dot green"></div>
+            </div>
+            <div class="window-title">website.jsx</div>
+          </div>
+          <div class="code-content">
+            <div class="code-line"><span class="code-tag">&lt;Website</span> <span class="code-attr">performance</span>=<span class="code-value">"optimal"</span></div>
+            <div class="code-line">  <span class="code-attr">scalability</span>=<span class="code-value">"unlimited"</span></div>
+            <div class="code-line">  <span class="code-attr">technology</span>=<span class="code-value">"next-gen"</span><span class="code-tag">&gt;</span></div>
+            <div class="code-line">  <span class="code-tag">&lt;UserExperience</span> <span class="code-attr">quality</span>=<span class="code-value">"exceptional"</span><span class="code-tag">/&gt;</span></div>
+            <div class="code-line">  <span class="code-tag">&lt;BusinessResults</span> <span class="code-attr">growth</span>=<span class="code-value">"accelerated"</span><span class="code-tag">/&gt;</span></div>
+            <div class="code-line"><span class="code-tag">&lt;/Website&gt;</span></div>
+            <div class="code-line code-comment">// Crafted by VIXORA</div>
+          </div>
+        </div>
+      `;
+    } else if (service.type === 'logo-design') {
+      visualContent = `
+        <div class="circles-container ${service.type}">
+          <div class="circle-3d circle-1"></div>
+          <div class="circle-3d circle-2"></div>
+          <div class="circle-3d circle-3"></div>
+          <div class="circle-3d circle-4"></div>
+        </div>
+        <div class="visual-container">
+          <div class="logo-design-visual">
+            <div class="vixora-logo"></div>
+            <div class="logo-info">
+              <h4>Brand Identity System</h4>
+              <p>Scalable vector logo with full visual identity guidelines. Perfect for all applications and screen sizes.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (service.type === 'video-edit') {
+      let waveformBars = '';
+      for (let i = 0; i < 50; i++) {
+        waveformBars += `<div class="waveform-bar" style="--i: ${i};"></div>`;
+      }
+      
+      visualContent = `
+        <div class="circles-container ${service.type}">
+          <div class="circle-3d circle-1"></div>
+          <div class="circle-3d circle-2"></div>
+          <div class="circle-3d circle-3"></div>
+          <div class="circle-3d circle-4"></div>
+        </div>
+        <div class="visual-container">
+          <div class="video-editor-container">
+            <div class="video-preview">
+              <div class="video-preview-screen">
+                <div class="video-waveform">
+                  ${waveformBars}
+                </div>
+              </div>
+              <div class="video-controls">
+                <div class="control-btn skip-back" title="Skip Back"></div>
+                <div class="control-btn rewind" title="Rewind"></div>
+                <div class="control-btn play" title="Play"></div>
+                <div class="control-btn forward" title="Forward"></div>
+                <div class="control-btn skip-forward" title="Skip Forward"></div>
+              </div>
+            </div>
+            <div class="video-timeline">
+              <div class="timeline-track">
+                <div class="timeline-progress"></div>
+                <div class="timeline-clips">
+                  <div class="timeline-clip" style="background: linear-gradient(45deg, rgba(64,158,255,0.4), rgba(64,158,255,0.1));"></div>
+                  <div class="timeline-clip" style="background: linear-gradient(45deg, rgba(138,61,255,0.4), rgba(138,61,255,0.1));"></div>
+                  <div class="timeline-clip" style="background: linear-gradient(45deg, rgba(61,122,255,0.4), rgba(61,122,255,0.1));"></div>
+                  <div class="timeline-clip" style="background: linear-gradient(45deg, rgba(61,255,214,0.4), rgba(61,255,214,0.1));"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    
+    // Generate feature list with conditional hide-mobile class
+    const featuresList = service.features.map((feature, index) => {
+      const hideClass = index >= 2 ? ' hide-mobile' : '';
+      return `<li class="${hideClass.trim()}">${feature}</li>`;
+    }).join('');
+    
+    return `
+      <div class="center-glow ${service.glowClass}"></div>
+      <div class="service-container">
+        <div class="service-content">
+          <div class="service-visual ${service.type}">
+            ${visualContent}
+          </div>
+          <div class="service-details">
+            <h3>${service.title}</h3>
+            <p>${service.desc}</p>
+            <ul class="service-features">
+              ${featuresList}
+            </ul>
+            <a href="#" class="service-link">Explore ${service.title.split(' ')[0]} Services</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function setLayer(el, service) {
+    el.innerHTML = getServiceHTML(service);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (services && services.length) {
+      setLayer(base, services[0]);
+    }
+  });
+
+  window.addEventListener('scroll', () => {
+    const start = wrapper.offsetTop;
+    const end = start + wrapper.offsetHeight - window.innerHeight;
+    const y = window.scrollY;
+
+    if (y < start || y > end) return;
+
+    const progress = (y - start) / (end - start);
+    const total = services.length;
+    
+    const phaseFloat = progress * total;
+    const phase = Math.min(Math.floor(phaseFloat), total - 1);
+    const local = phaseFloat - phase;
+
+    const current = services[phase];
+    const next = services[phase + 1];
+
+    setLayer(base, current);
+
+    if (next) {
+      setLayer(reveal, next);
+      const maxRadius = Math.hypot(window.innerWidth, window.innerHeight) * 1.2;
+      const radius = Math.min(local, 0.999) * maxRadius;
+      reveal.style.clipPath = `circle(${radius}px at center)`;
+    } else {
+      reveal.style.clipPath = `circle(0px at center)`;
+    }
+  });
+</script>
+
+</body>
+</html>

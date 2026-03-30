@@ -1,0 +1,286 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+
+// Import logos
+import tatvLogo from '../assets/logos/tatv.png';
+import magicswirllLogo from '../assets/logos/magicswirll.png';
+import unipickLogo from '../assets/logos/unipick.png';
+import magicClickzzLogo from '../assets/logos/magic clickzz.png';
+
+const projects = [
+    {
+        name: 'Unipick',
+        category: 'UNIVERSITY ADMISSION PORTAL',
+        description: 'A visually rich university admission portal crafted with custom design and smooth interactions.',
+        color: '#FF7A3D', // Brown/Orange
+        link: 'https://www.unipick.org/',
+        domain: 'unipick.org'
+    },
+    {
+        name: 'CA Ramesh Y',
+        category: 'PORTFOLIO',
+        description: 'A modern portfolio website showcasing creative work and professional experience.',
+        color: '#2ECC71', // Green
+        link: 'https://www.carameshy.com/',
+        domain: 'carameshy.com'
+    },
+    {
+        name: 'Sai Kulwanth Society',
+        category: 'EDUCATIONAL',
+        description: 'Platform for Sai Kulwanth Educational Society. (Under Construction)',
+        color: '#F1C40F', // Yellow
+        link: 'https://saikulwanth.app',
+        domain: 'saikulwanth.app'
+    },
+    {
+        name: 'Swaminarayan University',
+        category: 'ADMISSION PORTAL',
+        description: 'Comprehensive educational platform for student enrollment and academic management.',
+        color: '#8A3DFF', // Violet
+        link: 'https://swaminarayan-foundation.onrender.com/',
+        domain: 'swaminarayan.com'
+    },
+    {
+        name: 'Halftone Systems',
+        category: 'TECH PLATFORM',
+        description: 'Corporate website for Halftone Systems. (Under Construction)',
+        color: '#E74C3C', // Red
+        link: 'https://halftonesystems-sigma.vercel.app/',
+        domain: 'halftonesystems.app'
+    },
+    {
+        name: 'Swarrnim University',
+        category: 'ADMISSION PORTAL',
+        description: 'A modern e-commerce style platform for university admissions with secure admin panel.',
+        color: '#409EFF', // Blue
+        link: 'https://swarrnim.vercel.app/',
+        domain: 'swarnim.com'
+    }
+];
+
+// Moving Stars Component
+// Stars component removed
+
+
+
+const ProjectCard = ({ project }) => {
+    return (
+        <div className="relative w-full md:w-[340px] h-[360px] flex-shrink-0 group/card">
+
+            {/* Main Card Body with Cutout */}
+            <div
+                className="relative w-full h-full bg-transparent rounded-[2rem] p-8 border border-white/10 transition-all duration-500 group-hover/card:border-white/30 overflow-hidden flex flex-col"
+                style={{
+                    // Cutout mask concentric with the 56px button (radius 28px).
+                    // Button center is at (28px, 28px) from bottom-right.
+                    maskImage: 'radial-gradient(circle at calc(100% - 28px) calc(100% - 28px), transparent 34px, black 35px)',
+                    WebkitMaskImage: 'radial-gradient(circle at calc(100% - 28px) calc(100% - 28px), transparent 34px, black 35px)',
+                }}
+            >
+                {/* SVG Border for Cutout - Positioned exactly on the hole */}
+                <div className="absolute right-[28px] bottom-[28px] translate-x-1/2 translate-y-1/2 w-[68px] h-[68px] z-20 pointer-events-none">
+                    <svg width="68" height="68" viewBox="0 0 68 68" className="w-full h-full rotate-[-90deg]">
+                        <circle
+                            cx="34"
+                            cy="34"
+                            r="33.5"
+                            fill="none"
+                            stroke="rgba(255,255,255,0.1)"
+                            strokeWidth="1"
+                            strokeDasharray="53 200"
+                            strokeDashoffset="-25"
+                        />
+                    </svg>
+                </div>
+                {/* Hover Color Glow */}
+                <div
+                    className="absolute inset-x-0 bottom-0 h-1/2 opacity-0 group-hover/card:opacity-40 transition-opacity duration-700 pointer-events-none"
+                    style={{ background: `radial-gradient(circle at bottom, ${project.color}, transparent 70%)` }}
+                />
+
+                {/* Top Border Shine */}
+                <div
+                    className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px]"
+                    style={{
+                        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6) 50%, transparent)',
+                        boxShadow: '0 0 10px rgba(255, 255, 255, 0.4)'
+                    }}
+                />
+
+                <div className="flex flex-col h-full relative z-10">
+                    {/* Category Tag */}
+                    <div className="mb-4">
+                        <span className="bg-transparent border border-white/10 px-4 py-1.5 rounded-full text-[9px] font-bold tracking-[0.2em] text-[#ff4d29] uppercase whitespace-nowrap">
+                            {project.category}
+                        </span>
+                    </div>
+
+                    {/* Project Title */}
+                    <h4 className="text-[1.5rem] md:text-[2rem] font-bold mb-3 tracking-tighter uppercase text-white leading-tight">
+                        {project.name}
+                    </h4>
+
+                    {/* Project Description */}
+                    <p className="text-white/40 text-xs leading-relaxed mb-4 font-light line-clamp-3">
+                        {project.description}
+                    </p>
+
+                    {/* Footer Section */}
+                    <div className="mt-auto pt-6 border-t border-white/[0.05] flex items-center justify-between pr-24">
+                        <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 group/link cursor-pointer"
+                        >
+                            <div className="w-6 h-6 border border-white/20 group-hover/link:border-white/50 rounded-full flex items-center justify-center transition-colors">
+                                {/* Top right arrow */}
+                                <div className="w-1.5 h-1.5 border-t border-r border-white/40 group-hover/link:border-white/80 rotate-45 transition-colors origin-center translate-y-[1px] -translate-x-[1px]" />
+                            </div>
+                            <span className="text-white/30 group-hover/link:text-white/90 text-[10px] font-bold tracking-[0.1em] transition-colors uppercase">
+                                {project.domain}
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {/* The Gear Shape placed in the bottom right corner (static) */}
+            <div className="absolute bottom-0 right-0 w-[56px] h-[56px] flex items-center justify-center pointer-events-none z-30">
+                <div className="relative w-12 h-12 flex items-center justify-center">
+                    {/* Gear Shape SVG with Rotation (spinning) */}
+                    <svg
+                        className="w-10 h-10 text-white/50 animate-[spin_4s_linear_infinite]"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    );
+};
+const LogoPill = ({ title, desc, color, logo, index, isActive, onClick }) => {
+    return (
+        <div
+            onClick={onClick}
+            className={`relative flex items-center justify-end px-3 py-2 rounded-full overflow-hidden flex-shrink-0 -ml-12 first:ml-0 group transition-all duration-500 shadow-2xl cursor-pointer md:cursor-default
+            ${isActive ? 'w-[360px]' : 'w-[160px]'} lg:w-[160px] lg:hover:w-[360px]`}
+            style={{
+                background: `linear-gradient(90deg, ${color}33 0%, ${color}11 100%)`,
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(2px)',
+                zIndex: 100 - index
+            }}
+        >
+            {/* Text hidden initially, revealed on hover (desktop) or active (mobile) */}
+            <div className={`flex flex-col gap-0.5 pr-6 text-right flex-1 overflow-hidden whitespace-nowrap transition-all duration-500
+                 ${isActive ? 'opacity-100 w-auto' : 'opacity-0 w-0'}
+                 lg:opacity-0 lg:w-0 lg:group-hover:opacity-100 lg:group-hover:w-auto`}>
+                <h4 className="text-white text-xl font-black tracking-tighter" style={{ color: color }}>{title}</h4>
+                <p className="text-white/50 text-[8px] font-bold uppercase tracking-[0.2em] leading-tight">{desc}</p>
+            </div>
+
+            <div className="w-24 h-24 flex-shrink-0 flex items-center justify-center relative bg-transparent">
+                <img
+                    src={logo}
+                    alt={title}
+                    className={`w-full h-full object-contain scale-90 relative z-10 drop-shadow-lg ${index === 3 ? 'rounded-full' : ''}`}
+                />
+            </div>
+        </div>
+    );
+};
+
+const WorkSection = () => {
+    const [activePillIndex, setActivePillIndex] = useState(-1);
+    return (
+        <section id="projects" className="relative w-full min-h-screen bg-transparent py-16 flex flex-col items-center">
+
+            {/* Background Atmosphere - Removed White Shade */}
+            {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.02)_0%,_transparent_70%)] pointer-events-none" /> */}
+
+            {/* Main Header Content - Centered */}
+            <motion.div
+                className="relative z-20 text-center px-4 mb-12 w-full max-w-4xl"
+                initial={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0 }}
+            >
+                <h3 className="text-[clamp(1.5rem,8vw,3.5rem)] md:text-6xl font-black tracking-tighter uppercase mb-4 relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
+                    Delivered Projects
+                    {/* SVG Underline */}
+                    <div className="absolute -bottom-2 left-0 w-full h-4 -z-10">
+                        <svg viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                            <path d="M2.00025 7.00001C35.9529 3.01602 125.792 -2.12693 197.994 3.00631" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="3" strokeLinecap="round" />
+                        </svg>
+                    </div>
+                </h3>
+                {/* Removed Separator Line */}
+                {/* <div className="h-[1px] w-24 bg-white/20 mx-auto mb-4" /> */}
+                <p className="text-[10px] md:text-xs tracking-[0.3em] font-light uppercase mt-4 bg-clip-text text-transparent bg-gradient-to-b from-white/90 to-white/50">
+                    Showcasing excellence in digital solutions
+                </p>
+            </motion.div>
+
+
+
+            {/* Static Grid of Cards */}
+            <div className="relative z-20 flex flex-wrap justify-start gap-10 px-8 md:px-16 max-w-7xl w-full mb-16">
+                {projects.map((project, idx) => (
+                    <motion.div
+                        key={idx}
+                        initial={{ opacity: 1, y: 0 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0 }}
+                        className="w-full md:w-[340px] flex-shrink-0"
+                    >
+                        <ProjectCard project={project} />
+                    </motion.div>
+                ))}
+            </div>
+
+
+
+            {/* Logo Pill Layout - Reduced Bottom Spacing */}
+            <div
+                className="relative z-20 flex w-full overflow-x-auto pb-4 scrollbar-hide px-8 md:px-16 mb-8 justify-start md:justify-center"
+                style={{ scrollBehavior: 'smooth' }}
+            >
+                <div className="flex flex-row items-center">
+                    {/* Render LogoPills with active state logic */}
+                    {[
+                        { title: "TATV", desc: "natural food products", color: "#FF7A3D", logo: tatvLogo },
+                        { title: "MAGIC SWIRLL", desc: "icecream and desert shop", color: "#8A3DFF", logo: magicswirllLogo },
+                        { title: "UNIPICK", desc: "university admission conpany", color: "#409EFF", logo: unipickLogo },
+                        { title: "MAGIC CLICKZZ", desc: "digital photography", color: "#ffffff", logo: magicClickzzLogo }
+                    ].map((item, index) => (
+                        <LogoPill
+                            key={index}
+                            index={index}
+                            title={item.title}
+                            desc={item.desc}
+                            color={item.color}
+                            logo={item.logo}
+                            isActive={activePillIndex === index}
+                            onClick={() => setActivePillIndex(activePillIndex === index ? -1 : index)}
+                        />
+                    ))}
+                </div>
+            </div>
+
+
+
+            {/* Bottom Info */}
+            {/* Bottom Info Removed */}
+
+            {/* Gradient Overlay Removed to prevent partition look */}
+        </section>
+    );
+};
+
+export default WorkSection;
