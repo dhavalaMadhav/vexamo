@@ -23,7 +23,6 @@ function App() {
 
   const location = useLocation();
   const isLogoCompetition = location.pathname === '/website-competition';
-
   useEffect(() => {
     const lenis = new Lenis()
 
