@@ -9,12 +9,20 @@ import magicClickzzLogo from '../assets/logos/magic clickzz.png';
 
 const projects = [
     {
-        name: 'Unipick',
-        category: 'UNIVERSITY ADMISSION PORTAL',
-        description: 'A visually rich university admission portal crafted with custom design and smooth interactions.',
-        color: '#FF7A3D', // Brown/Orange
-        link: 'https://www.unipick.org/',
-        domain: 'unipick.org'
+        name: 'Halftone Systems',
+        category: 'TECH PLATFORM',
+        description: 'Corporate website for Halftone Systems. (Under Construction)',
+        color: '#E74C3C', // Red
+        link: 'https://halftonesystems.com/',
+        domain: 'halftonesystems.com'
+    },
+    {
+        name: 'Sai Kulwanth Society',
+        category: 'EDUCATIONAL',
+        description: 'Platform for Sai Kulwanth Educational Society. (Under Construction)',
+        color: '#F1C40F', // Yellow
+        link: 'https://srisaikulwanth.vercel.app/',
+        domain: 'srisaikulwanth.com'
     },
     {
         name: 'CA Ramesh Y',
@@ -25,12 +33,12 @@ const projects = [
         domain: 'carameshy.com'
     },
     {
-        name: 'Sai Kulwanth Society',
-        category: 'EDUCATIONAL',
-        description: 'Platform for Sai Kulwanth Educational Society. (Under Construction)',
-        color: '#F1C40F', // Yellow
-        link: 'https://saikulwanth.app',
-        domain: 'saikulwanth.app'
+        name: 'Unipick',
+        category: 'UNIVERSITY ADMISSION PORTAL',
+        description: 'A visually rich university admission portal crafted with custom design and smooth interactions.',
+        color: '#FF7A3D', // Brown/Orange
+        link: 'https://www.unipick.org/',
+        domain: 'unipick.org'
     },
     {
         name: 'Swaminarayan University',
@@ -40,14 +48,7 @@ const projects = [
         link: 'https://swaminarayan-foundation.onrender.com/',
         domain: 'swaminarayan.com'
     },
-    {
-        name: 'Halftone Systems',
-        category: 'TECH PLATFORM',
-        description: 'Corporate website for Halftone Systems. (Under Construction)',
-        color: '#E74C3C', // Red
-        link: 'https://halftonesystems-sigma.vercel.app/',
-        domain: 'halftonesystems.app'
-    },
+
     {
         name: 'Swarrnim University',
         category: 'ADMISSION PORTAL',
