@@ -21,8 +21,8 @@ const projects = [
         category: 'EDUCATIONAL',
         description: 'Platform for Sai Kulwanth Educational Society. (Under Construction)',
         color: '#F1C40F', // Yellow
-        link: 'https://srisaikulwanth.vercel.app/',
-        domain: 'srisaikulwanth.com'
+        link: 'https://www.saikulwanth.com/',
+        domain: 'saikulwanth.com'
     },
     {
         name: 'CA Ramesh Y',
